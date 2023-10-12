@@ -3,6 +3,7 @@ import time
 
 
 sys.path.append('../../dependencies/sphero-sdk-raspberrypi-python')
+sys.path.append('D:\Data\Dev\sphero-sdk-raspberrypi-python')
 from sphero_sdk import SpheroRvrObserver
 
 
@@ -27,7 +28,7 @@ def main():
             head += deg_per_second * dt/1000
             head = head % 360
             
-            rvr.drive_control.drive_with_heading(64, head, None)
+            rvr.drive_with_heading(64, head, None)
             time.sleep(0.1)
 
     
