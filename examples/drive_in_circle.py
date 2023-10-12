@@ -25,7 +25,7 @@ def main():
             dt = time.time() - prev_time
             prev_time = time.time()
 
-            head += deg_per_second * dt/1000
+            head += deg_per_second * dt
             head = head % 360
 
             print("Heading: " + str(head))
