@@ -8,7 +8,7 @@ from sphero_sdk import SpheroRvrObserver
 
 rvr = SpheroRvrObserver()
 
-prev_time = time.time()
+prev_time = 0
 
 def main():
     rvr.wake()
@@ -19,6 +19,7 @@ def main():
     try:
         deg_per_second = 90
         head = 0
+        prev_time = time.time()
         while True:
             dt = time.time() - prev_time
             prev_time = time.time()
