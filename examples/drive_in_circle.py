@@ -28,7 +28,7 @@ def main():
             head += deg_per_second * dt/1000
             head = head % 360
             
-            rvr.drive_with_heading(64, head, None)
+            rvr.drive_with_heading(64, int(head), None)
             time.sleep(0.1)
 
     
