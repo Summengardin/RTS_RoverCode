@@ -1,5 +1,5 @@
 import sys  # Allows us to use sys.path.append below
-import time # Allows us to insert delays in our script
+import time  # Allows us to insert delays in our script
 
 # sys.path tells the interpreter where to look for modules.
 # Tell it to look in the SDK directory as well.
@@ -11,7 +11,6 @@ from sphero_sdk import Colors
 
 # Instantiate (create) a SpheroRvrObserver object
 rvr = SpheroRvrObserver()
-
 
 # Make sure RVR is awake and ready to receive commands
 rvr.wake()
@@ -30,12 +29,11 @@ try:
         # Now try using RGB (Red Green Blue) values.  
         # This allows us to pick any color in the RGB colorspace.
         rvr.led_control.set_all_leds_rgb(red=255, green=0, blue=0)
-        
+
         time.sleep(1)
-        
+
 except KeyboardInterrupt:
     print('\nProgram terminated with keyboard interrupt.')
 
-
 # Call this at the end of your program to close the serial port
-rvr.close() 
+rvr.close()

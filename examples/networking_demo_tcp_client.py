@@ -2,7 +2,6 @@ import socket
 
 
 def main():
-
     # Create a TCP/IP socket
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         # Connect the socket to the port where the server is listening

@@ -14,7 +14,6 @@ def main(args):
     tcp_client = tcp_client()
 
 
-
 if __name__ == "__main__":
     args = parse_args()
     main(args)

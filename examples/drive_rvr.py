@@ -1,5 +1,5 @@
 import sys  # Allows us to use sys.path.append below
-import time # Allows us to insert delays in our script
+import time  # Allows us to insert delays in our script
 
 # sys.path tells the interpreter where to look for modules.
 # Tell it to look in the SDK directory as well.
@@ -11,13 +11,13 @@ from sphero_sdk import SpheroRvrObserver
 # Instantiate (create) a SpheroRvrObserver object
 rvr = SpheroRvrObserver()
 
-# This tells the Python interpreter that we are defining 
+
+# This tells the Python interpreter that we are defining
 # a function named main that takes no arguments
 def main():
-
     # Make sure RVR is awake and ready to receive commands
     rvr.wake()
-    
+
     # Wait for RVR to wake up
     time.sleep(2)
 
@@ -28,16 +28,16 @@ def main():
     # and returns to our main function when the specified time has
     # elapsed.  This means it is a "blocking" function.
     rvr.drive_control.drive_forward_seconds(
-        speed=64,       # This is out of 255, where 255 corresponds to 2 m/s
-        heading=0,      # Valid heading values are 0-359
-        time_to_drive=1 # Driving duration in seconds
+        speed=64,  # This is out of 255, where 255 corresponds to 2 m/s
+        heading=0,  # Valid heading values are 0-359
+        time_to_drive=1  # Driving duration in seconds
     )
 
     # Now back up.
     rvr.drive_control.drive_backward_seconds(
-        speed=64,       # This is out of 255, where 255 corresponds to 2 m/s
-        heading=0,      # Valid heading values are 0-359
-        time_to_drive=1 # Driving duration in seconds
+        speed=64,  # This is out of 255, where 255 corresponds to 2 m/s
+        heading=0,  # Valid heading values are 0-359
+        time_to_drive=1  # Driving duration in seconds
     )
 
 
