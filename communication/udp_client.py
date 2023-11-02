@@ -3,6 +3,7 @@ import socket
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 from protobuf.my_messages_pb2 import VideoFeed, Instruction
+import time
 
 class PiCamStreamer:
     def __init__(self, server_address=('127.0.0.1', 8080), resolution=(640, 480), framerate=32):
