@@ -19,7 +19,7 @@ prev_time = 0
 def main():
     rvr.wake()
     time.sleep(2)
-    client = tcp_client()
+    client = tcp_client.tcp_client()
     client.connect("10.22.192.34", 9091)
 
 
