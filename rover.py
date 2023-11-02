@@ -12,21 +12,9 @@ def commsArgs():
     args = parser.parse_args()
     return args
 
-def testComms ():
-    import socket
-
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('0.0.0.0', 8080))
-    s.listen(1)
-    print("Listening on port 8080...")
-    clientsocket, address = s.accept()
-    print(f"Connection from {address} has been established!")
-
-
 if __name__ == "__main__":
     #args = parse_args()
     #main(args)
-    # args = commsArgs()
-    # print("Streaming to IP address:", args.ip)
-    # mainCamera(args)
-    testComms()
+    args = commsArgs()
+    print("Streaming to IP address:", args.ip)
+    mainCamera(args)
