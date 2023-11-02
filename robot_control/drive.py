@@ -1,11 +1,14 @@
-import sys
-import time
-import communication.tcp_client as tcp_client
-import json
 
+import sys
 sys.path.append('../../dependencies/sphero-sdk-raspberrypi-python')
 sys.path.append('../')
 sys.path.append('D:\Data\Dev\sphero-sdk-raspberrypi-python')
+
+
+
+import time
+import communication.tcp_client as tcp_client
+import json
 from sphero_sdk import SpheroRvrObserver
 
 rvr = SpheroRvrObserver()
@@ -50,3 +53,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
