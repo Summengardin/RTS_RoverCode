@@ -12,10 +12,13 @@ def parse_args():
 
 
 def main(args):
-    #tcp_client = tcp_client()
+    tcp_client = tcp_client()
+
+def mainCamera():
     streamer = PiCamStreamer(server_address=('192.168.1.10', 8080), resolution=(640, 480), framerate=30)
     streamer.run()
 
 if __name__ == "__main__":
-    args = parse_args()
-    main(args)
+    #args = parse_args()
+    #main(args)
+    mainCamera()
