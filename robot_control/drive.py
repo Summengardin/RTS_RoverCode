@@ -26,6 +26,7 @@ def main():
     rvr.drive_control.reset_heading()
 
     try:
+        print("Starting loop")
         head = 0
         speed = 64
         while True:
