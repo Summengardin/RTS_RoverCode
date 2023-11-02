@@ -1,6 +1,6 @@
 import argparse
 
-from RTS_RoverCode.communication.udp_client import PiCamStreamer
+from communication import udp_client
 from communication import tcp_client
 
 def parse_args():
