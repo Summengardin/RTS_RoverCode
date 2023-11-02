@@ -1,7 +1,7 @@
 import socket
 
 # Set the server IP and the port
-server_ip = '10.24.92.173'
+server_ip = "10.22.192.34" #'10.24.92.173'
 port = 8080
 
 # Create a UDP socket
