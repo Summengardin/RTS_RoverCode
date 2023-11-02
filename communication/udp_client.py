@@ -36,12 +36,15 @@ class PiCamStreamer:
                 video_feed.messageFeed = image_bytes
                 serialized_video_feed = video_feed.SerializeToString()
 
-                self.sock.sendto(serialized_video_feed, self.server_address)
+                try:
+                    self.sock.sendto(serialized_video_feed, self.server_address)
 
-                serialized_instruction, _ = self.sock.recvfrom(self.MAX_UDP_PACKET_SIZE)
-                instruction = Instruction()
-                instruction.ParseFromString(serialized_instruction)
-                print("Received instruction:", instruction.messageInstruction)
+                    serialized_instruction, _ = self.sock.recvfrom(self.MAX_UDP_PACKET_SIZE)
+                    instruction = Instruction()
+                    instruction.ParseFromString(serialized_instruction)
+                    print("Received instruction:", instruction.messageInstruction)
+                except Exception as e:
+                    print(f"An error occurred: {e}")
             else:
                 print("Image too large to send over UDP")
 
@@ -57,7 +60,7 @@ class PiCamStreamer:
         self.sock.close()
 
 if __name__ == "__main__":
-    streamer = PiCamStreamer(server_address=('127.0.0.1', 8080))
+    streamer = PiCamStreamer(server_address=('10.24.92.173', 8080))
     try:
         streamer.run()
     except KeyboardInterrupt:
