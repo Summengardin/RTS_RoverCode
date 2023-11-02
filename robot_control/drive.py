@@ -38,6 +38,13 @@ def main():
                 speed = 0
                 head = 0
 
+            if (speed > 255):
+                speed = 255
+            elif (speed < 0):
+                speed = 0
+            
+            head = head % 360
+
             print("Heading: " + str(head))
 
             rvr.drive_with_heading(int(speed), int(head), 0)
