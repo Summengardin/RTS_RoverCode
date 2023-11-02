@@ -31,6 +31,7 @@ def main():
         while True:
             recv = client.recv()
             cmd_dict = json.loads(recv)
+            print(cmd_dict)
             if cmd_dict['command'] == 'move':
                 speed = cmd_dict['speed']
                 head = cmd_dict['heading']
