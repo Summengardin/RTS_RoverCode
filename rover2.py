@@ -11,7 +11,7 @@ try:
     # Send data to server
     message = 'Hello, Server!'
     client_socket.sendto(message.encode(), (server_ip, port))
-
+    print(f"Message Sent: {message}")
     # Receive response from server
     response, server = client_socket.recvfrom(4096)
     print(f"Server response: {response.decode()}")
