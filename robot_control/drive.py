@@ -38,7 +38,7 @@ def main():
                 head = int(cmd_dict['heading'])
             elif cmd_dict['command'] == 'stop':
                 speed = 0
-                head = 0
+
 
             if (speed > 60):
                 speed = 60
