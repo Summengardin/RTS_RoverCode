@@ -4,6 +4,7 @@ import communication.tcp_client as tcp_client
 import json
 
 sys.path.append('../../dependencies/sphero-sdk-raspberrypi-python')
+sys.path.append('../')
 sys.path.append('D:\Data\Dev\sphero-sdk-raspberrypi-python')
 from sphero_sdk import SpheroRvrObserver
 
