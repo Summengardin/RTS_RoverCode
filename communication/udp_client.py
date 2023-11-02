@@ -6,7 +6,7 @@ from protobuf.my_messages_pb2 import VideoFeed, Instruction
 import time
 
 class PiCamStreamer:
-    def __init__(self, server_address=('127.0.0.1', 8080), resolution=(640, 480), framerate=32):
+    def __init__(self, server_address=('10.24.92.173', 8080), resolution=(320, 240), framerate=30):
         self.server_address = server_address
         self.resolution = resolution
         self.framerate = framerate
