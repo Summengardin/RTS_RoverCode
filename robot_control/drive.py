@@ -50,8 +50,7 @@ def main():
             print("Heading: " + str(head))
 
             rvr.drive_with_heading(int(speed), int(head), 0)
-            time.sleep(0.1)
-
+            
 
     except KeyboardInterrupt:
         print('\nProgram terminated with keyboard interrupt.')
