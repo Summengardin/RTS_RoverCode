@@ -33,8 +33,8 @@ def main():
             cmd_dict = json.loads(recv)
             print(cmd_dict)
             if cmd_dict['command'] == 'move':
-                speed = cmd_dict['speed']
-                head = cmd_dict['heading']
+                speed = int(cmd_dict['speed'])
+                head = int(cmd_dict['heading'])
             elif cmd_dict['command'] == 'stop':
                 speed = 0
                 head = 0
