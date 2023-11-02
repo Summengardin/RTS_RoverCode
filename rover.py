@@ -16,7 +16,7 @@ def parse_args():
 #    tcp_client = tcp_client()
 
 def mainCamera(args):
-    streamer = PiCamStreamer(server_address=(args.ip, 8080), resolution=(640, 480), framerate=30)
+    streamer = PiCamStreamer(server_address=(args.ip, 8080), resolution=(320, 240), framerate=30)
     streamer.run()
 
 def comms_args():
