@@ -1,4 +1,5 @@
 import socket
+import json
 
 
 class tcp_client:
@@ -25,6 +26,20 @@ class tcp_client:
 
 if __name__ == "__main__":
     client = tcp_client()
-    client.connect("localhost", 9090)
-    client.send("Hello World!")
-    print(client.recv())
+    client.connect("localhost", 9091)
+    
+    while True:
+        try:
+            recv = client.recv()
+            cmd_dict = json.loads(recv)
+            print(cmd_dict)
+            if cmd_dict['command'] == 'move':
+                print("move")
+                print(cmd_dict['speed'])
+                print(cmd_dict['heading'])
+            elif cmd_dict['command'] == 'stop':
+                print("stop")
+        except KeyboardInterrupt:
+            break
+
+
