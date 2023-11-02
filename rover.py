@@ -3,7 +3,7 @@ import argparse
 from communication.udp_client import PiCamStreamer
 
 def mainCamera(args):
-    streamer = PiCamStreamer(server_address=(args.ip, 8080), resolution=(320, 240), framerate=30)
+    streamer = PiCamStreamer(server_address=(args.ip, 8080), resolution=(160, 120), framerate=30)
     streamer.run()
 
 def commsArgs():
