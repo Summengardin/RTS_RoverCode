@@ -40,8 +40,8 @@ def main():
                 speed = 0
                 head = 0
 
-            if (speed > 255):
-                speed = 255
+            if (speed > 60):
+                speed = 60
             elif (speed < 0):
                 speed = 0
             
