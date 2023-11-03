@@ -5,6 +5,7 @@ from picamera.array import PiRGBArray
 from protobuf.my_messages_pb2 import VideoFeed, Instruction
 import time
 
+
 class PiCamStreamer:
     def __init__(self, server_address=("10.22.192.34", 8080), resolution=(320, 240), framerate=30):
         self.server_address = server_address
@@ -58,6 +59,7 @@ class PiCamStreamer:
     def close(self):
         self.camera.close()
         self.sock.close()
+
 
 if __name__ == "__main__":
     streamer = PiCamStreamer(server_address=("10.22.192.34", 8080))
