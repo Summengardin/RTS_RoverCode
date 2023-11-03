@@ -1,10 +1,8 @@
-
 import sys
+
 sys.path.append('../../dependencies/sphero-sdk-raspberrypi-python')
 sys.path.append('../')
 sys.path.append('D:\Data\Dev\sphero-sdk-raspberrypi-python')
-
-
 
 import time
 import communication.tcp_client as tcp_client
@@ -22,7 +20,6 @@ def main():
     client = tcp_client.tcp_client()
     client.connect("10.22.192.34", 9091)
 
-
     rvr.drive_control.reset_heading()
 
     try:
@@ -39,18 +36,17 @@ def main():
             elif cmd_dict['command'] == 'stop':
                 speed = 0
 
-
             if (speed > 60):
                 speed = 60
             elif (speed < 0):
                 speed = 0
-            
+
             head = head % 360
 
             print("Heading: " + str(head))
 
             rvr.drive_with_heading(int(speed), int(head), 0)
-            
+
 
     except KeyboardInterrupt:
         print('\nProgram terminated with keyboard interrupt.')
@@ -61,6 +57,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-

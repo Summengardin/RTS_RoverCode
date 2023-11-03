@@ -27,7 +27,7 @@ class tcp_client:
 if __name__ == "__main__":
     client = tcp_client()
     client.connect("localhost", 9091)
-    
+
     while True:
         try:
             recv = client.recv()
@@ -41,5 +41,3 @@ if __name__ == "__main__":
                 print("stop")
         except KeyboardInterrupt:
             break
-
-
