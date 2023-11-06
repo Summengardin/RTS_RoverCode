@@ -57,7 +57,7 @@ def main():
             print("Heading: " + str(head))
 
             if (cmd_dict['drive_mode'] == 'tank'):
-                rvr.drive_tank(int(left_velocity), int(left_direction), int(right_velocity), int(right_direction))
+                rvr.raw_motors(int(left_velocity), int(left_direction), int(right_velocity), int(right_direction))
             elif(cmd_dict['drive_mode'] == 'heading'):
                 rvr.drive_with_heading(int(speed), int(head), 0)
 
