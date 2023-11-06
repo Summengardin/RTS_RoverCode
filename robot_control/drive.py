@@ -91,6 +91,8 @@ def main():
             head = head % 360
 
             print("Heading: " + str(head))
+            print("left_velocity: " + str(left_velocity))
+            print("right_velocity: " + str(right_velocity))
 
             if (drive_mode == 'tank'):
                 rvr.raw_motors(int(left_velocity), int(left_direction), int(right_velocity), int(right_direction))
