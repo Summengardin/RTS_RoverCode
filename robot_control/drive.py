@@ -84,8 +84,6 @@ def main():
 
             if (speed > 60):
                 speed = 60
-                left_velocity = 60/255 * left_velocity
-                right_velocity = 60/255 * right_velocity
             elif (speed < 0):
                 speed = 0
 
