@@ -29,13 +29,16 @@ def main():
         while True:
             try:
                 recv = client.recv()
-                cmd_dict = json.loads(recv)
-                print(cmd_dict)
-            except KeyboardInterrupt:
-                break
-            except Exception as e:
-                print(f"Error: {e}")
+            except:
+                print("Connection lost, reconnecting...")
+                time.sleep(3)
+                client.connect("10.22.192.34", 9091)
+                print(f"Connected to server at: 10.22.192.34:9091")
                 continue
+
+            cmd_dict = json.loads(recv)
+            print(cmd_dict)
+
 
             left_direction = int(cmd_dict['left_direction'])
             left_velocity = int(cmd_dict['left_velocity'])
