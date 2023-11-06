@@ -13,6 +13,44 @@ rvr = SpheroRvrObserver()
 
 prev_time = 0
 
+def parse_cmd(cmd_dict):
+    try :
+        drive_mode = cmd_dict['drive_mode']
+    except:
+        drive_mode = 'tank'
+
+    try:
+        left_direction = int(cmd_dict['left_direction'])
+    except:
+        left_direction = 0
+    
+    try:
+        left_velocity = int(cmd_dict['left_velocity'])
+    except:
+        left_velocity = 0
+
+    try:
+        right_direction = int(cmd_dict['right_direction'])
+    except:
+        right_direction = 0
+
+    try:
+        right_velocity = int(cmd_dict['right_velocity'])
+    except:
+        right_velocity = 0
+
+    try:
+        speed = int(cmd_dict['speed'])
+    except:
+        speed = 0
+
+    try:
+        head = int(cmd_dict['heading'])
+    except:
+        head = 0
+
+    return drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head
+
 
 def main():
     rvr.wake()
@@ -40,12 +78,7 @@ def main():
             print(cmd_dict)
 
 
-            left_direction = int(cmd_dict['left_direction'])
-            left_velocity = int(cmd_dict['left_velocity'])
-            right_direction = int(cmd_dict['right_direction'])
-            right_velocity = int(cmd_dict['right_velocity'])
-            speed = int(cmd_dict['speed'])
-            head = int(cmd_dict['heading'])
+            drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head = parse_cmd(cmd_dict)
 
 
             if (speed > 60):
@@ -59,9 +92,9 @@ def main():
 
             print("Heading: " + str(head))
 
-            if (cmd_dict['drive_mode'] == 'tank'):
+            if (drive_mode == 'tank'):
                 rvr.raw_motors(int(left_velocity), int(left_direction), int(right_velocity), int(right_direction))
-            elif(cmd_dict['drive_mode'] == 'heading'):
+            elif(drive_mode == 'heading'):
                 rvr.drive_with_heading(int(speed), int(head), 0)
 
 
