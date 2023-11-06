@@ -95,7 +95,7 @@ def main():
             print("right_velocity: " + str(right_velocity))
 
             if (drive_mode == 'tank'):
-                rvr.raw_motors(int(left_velocity), int(left_direction), int(right_velocity), int(right_direction))
+                rvr.raw_motors(int(left_direction), int(left_velocity), int(right_direction), int(right_velocity))
             elif(drive_mode == 'heading'):
                 rvr.drive_with_heading(int(speed), int(head), 0)
 
