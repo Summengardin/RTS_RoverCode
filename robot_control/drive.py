@@ -19,25 +19,30 @@ def main():
     time.sleep(2)
     client = tcp_client.tcp_client()
     client.connect("10.22.192.34", 9091)
+    print(f"Connected to server at: 10.22.192.34:9091")
 
     rvr.drive_control.reset_heading()
 
     try:
-        print("Starting loop")
         head = 0
         speed = 64
         while True:
             recv = client.recv()
             cmd_dict = json.loads(recv)
             print(cmd_dict)
-            if cmd_dict['command'] == 'move':
-                speed = int(cmd_dict['speed'])
-                head = int(cmd_dict['heading'])
-            elif cmd_dict['command'] == 'stop':
-                speed = 0
+
+            left_direction = int(cmd_dict['left_direction'])
+            left_velocity = int(cmd_dict['left_velocity'])
+            right_direction = int(cmd_dict['right_direction'])
+            right_velocity = int(cmd_dict['right_velocity'])
+            speed = int(cmd_dict['speed'])
+            head = int(cmd_dict['heading'])
+
 
             if (speed > 60):
                 speed = 60
+                left_velocity = 60/255 * left_velocity
+                right_velocity = 60/255 * right_velocity
             elif (speed < 0):
                 speed = 0
 
@@ -45,7 +50,10 @@ def main():
 
             print("Heading: " + str(head))
 
-            rvr.drive_with_heading(int(speed), int(head), 0)
+            if (cmd_dict['drive_mode' == 'tank']):
+                rvr.drive_tank(int(left_velocity), int(left_direction), int(right_velocity), int(right_direction))
+            elif(cmd_dict['drive_mode' == 'heading']):
+                rvr.drive_with_heading(int(speed), int(head), 0)
 
 
     except KeyboardInterrupt:
