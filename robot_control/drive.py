@@ -70,6 +70,7 @@ def main():
             except:
                 print("Connection lost, reconnecting...")
                 time.sleep(3)
+                client = tcp_client.tcp_client()
                 client.connect("10.22.192.34", 9091)
                 print(f"Connected to server at: 10.22.192.34:9091")
                 continue
