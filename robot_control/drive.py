@@ -27,9 +27,15 @@ def main():
         head = 0
         speed = 64
         while True:
-            recv = client.recv()
-            cmd_dict = json.loads(recv)
-            print(cmd_dict)
+            try:
+                recv = client.recv()
+                cmd_dict = json.loads(recv)
+                print(cmd_dict)
+            except KeyboardInterrupt:
+                break
+            except Exception as e:
+                print(f"Error: {e}")
+                continue
 
             left_direction = int(cmd_dict['left_direction'])
             left_velocity = int(cmd_dict['left_velocity'])
