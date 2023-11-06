@@ -9,6 +9,9 @@ import communication.tcp_client as tcp_client
 import json
 from sphero_sdk import SpheroRvrObserver
 
+
+MAX_SPEED = 255
+
 rvr = SpheroRvrObserver()
 
 prev_time = 0
@@ -82,8 +85,10 @@ def main():
             drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head = parse_cmd(cmd_dict)
 
 
-            if (speed > 60):
-                speed = 60
+            if (speed > MAX_SPEED):
+                speed = MAX_SPEED
+                left_direction = MAX_SPEED/255 * left_direction
+                right_direction = MAX_SPEED/255 * right_direction
             elif (speed < 0):
                 speed = 0
 
