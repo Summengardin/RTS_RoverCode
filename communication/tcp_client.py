@@ -1,5 +1,6 @@
 import socket
 import json
+import time
 
 
 class tcp_client:
@@ -25,11 +26,15 @@ class tcp_client:
 
 
 if __name__ == "__main__":
+    
+    print("Connecting to server...")
     client = tcp_client()
     client.connect("localhost", 9091)
+    print("Connected!")
 
     while True:
         try:
+            
             recv = client.recv()
             cmd_dict = json.loads(recv)
             print(cmd_dict)
@@ -40,4 +45,15 @@ if __name__ == "__main__":
             elif cmd_dict['command'] == 'stop':
                 print("stop")
         except KeyboardInterrupt:
+            print("Closing connection...")
             break
+        except Exception as e:
+            print(f"Error: {e}")
+            time.sleep(3)
+            print("Connecting to server...")
+            client = tcp_client()
+            client.connect("localhost", 9091)
+            print("Connected!")
+            continue
+
+        
