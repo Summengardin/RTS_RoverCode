@@ -44,6 +44,9 @@ if __name__ == "__main__":
                 print(cmd_dict['heading'])
             elif cmd_dict['command'] == 'stop':
                 print("stop")
+
+            dummy_data = {"temperature": 20, "humidity": 50}
+            client.send(json.dumps(dummy_data))
         except KeyboardInterrupt:
             print("Closing connection...")
             break
