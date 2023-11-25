@@ -1,8 +1,10 @@
 import smbus
-import qwiic_vl53l1x as qwiic
+#import qwiic_vl53l1x as qwiic
+import qwiic
 import time
 
 
+Mux = qwiic.QwiicTCA9548A()
 Tof_front = qwiic.QwiicVL53L1X()
 Tof_back = qwiic.QwiicVL53L1X()
 
