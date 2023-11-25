@@ -26,24 +26,13 @@ if (Tof_back.sensor_init() == None):					 # Begin returns 0 on a good init
 
 
 
-
 while(True):
-	try:
-		distance = Tof_front.get_distance()	 # Get the result of the measurement from the senso
+    try: 
+        distance_front = Tof_front.get_distance() # Get the result of the measurement from the sensor
+        distance_back = Tof_back.get_distance()	 # Get the result of the measurement from the sensor
+        print(f"Distance front[mm]: {distance_front} Distance back[mm]: {distance_back}")
+        time.sleep(0.1)
 
-		distanceInches = distance / 25.4
-		distanceFeet = distanceInches / 12.0
-
-		print("Distance front(mm): %s Distance front(ft): %s" % (distance, distanceFeet))
-
-		distance = Tof_back.get_distance()	 # Get the result of the measurement from the sensor
-
-		distanceInches = distance / 25.4
-		distanceFeet = distanceInches / 12.0
-
-		print("Distance back(mm): %s Distance back(ft): %s" % (distance, distanceFeet))
-		time.sleep(0.01)
-
-	except Exception as e:
-		print(e)
-		break
+    except Exception as e:
+        print(e)
+        break
