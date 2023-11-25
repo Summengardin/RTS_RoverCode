@@ -3,7 +3,7 @@ import qwiic_tca9548a as qwiic_mux
 import time
 
 
-Mux = qwiic_mux.QwiicTCA9548A()
+Mux = qwiic_mux.QwiicTCA9548A(29)
 Tof_front = qwiic_dist.QwiicVL53L1X()
 Tof_back = qwiic_dist.QwiicVL53L1X()
 
