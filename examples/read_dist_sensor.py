@@ -1,10 +1,13 @@
 import qwiic_vl53l1x as qwiic_dist
 import qwiic_tca9548a as qwiic_mux
+import qwiic
 import time
 import sys
 
+results = qwiic.list_devices()
+print(results)
 
-mux_address = sys.argv[1] if len(sys.argv) > 1 else 70
+mux_address = sys.argv[1] if len(sys.argv) > 1 else 112 # 0x70
 
 Mux = qwiic_mux.QwiicTCA9548A(int(mux_address))
 Tof_front = qwiic_dist.QwiicVL53L1X()
