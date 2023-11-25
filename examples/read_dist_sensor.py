@@ -13,7 +13,7 @@ if (Mux.is_connected() == False):						 # Begin returns 0 on a good init
 
 
 # Enable channel 3 and 7
-Mux.enable_channels([3,7])
+Mux.enable_all()
 time.sleep(1)
 Mux.list_channels()
 time.sleep(3)
