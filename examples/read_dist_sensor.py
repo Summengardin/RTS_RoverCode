@@ -4,9 +4,9 @@ import time
 import sys
 
 
-mux_address = sys.argv[1] if len(sys.argv) > 1 else 0x70
+mux_address = sys.argv[1] if len(sys.argv) > 1 else 70
 
-Mux = qwiic_mux.QwiicTCA9548A(mux_address)
+Mux = qwiic_mux.QwiicTCA9548A(int(mux_address))
 Tof_front = qwiic_dist.QwiicVL53L1X()
 Tof_back = qwiic_dist.QwiicVL53L1X()
 
