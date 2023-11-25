@@ -1,6 +1,7 @@
-import qwiic
-import time
 import smbus
+import qwiic_vl53l1x as qwiic
+import time
+
 
 Tof_front = qwiic.QwiicVL53L1X()
 Tof_back = qwiic.QwiicVL53L1X()
