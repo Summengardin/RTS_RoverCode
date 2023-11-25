@@ -12,11 +12,8 @@ bus_number = 1  # 1 for Rasp Pi rev 2 and 3
 bus = smbus.SMBus(bus_number)
 mux_address = 0x70  # Replace with your mux's I2C address
 
-if Mux.begin():
-    print("TCA9548A initialized.")
-else:
-    print("TCA9548A initialization failed!")
-    exit(1)
+print("Mux channels enabled:")
+Mux.list_channels()
 	
 # Enable channel 3 and 7
 Mux.enable_channels(3)
