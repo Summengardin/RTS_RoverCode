@@ -7,14 +7,10 @@ Mux = qwiic_mux.QwiicTCA9548A()
 Tof_front = qwiic_dist.QwiicVL53L1X()
 Tof_back = qwiic_dist.QwiicVL53L1X()
 
-
-
-
-
 	
 # Enable channel 3 and 7
-Mux.enable_channels(3)
-Mux.enable_channels(7)
+Mux.enable_channels([3,7])
+time.sleep(1)
 Mux.list_channels()
 time.sleep(3)
 
