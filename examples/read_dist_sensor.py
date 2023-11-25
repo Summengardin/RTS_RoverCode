@@ -8,6 +8,10 @@ Tof_front = qwiic_dist.QwiicVL53L1X()
 Tof_back = qwiic_dist.QwiicVL53L1X()
 
 	
+if (Mux.is_connected() == False):						 # Begin returns 0 on a good init
+    print("The Qwiic Mux device isn't connected to the system. Please check your connection")
+
+
 # Enable channel 3 and 7
 Mux.enable_channels([3,7])
 time.sleep(1)
