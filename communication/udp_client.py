@@ -39,11 +39,6 @@ class PiCamStreamer:
 
                 try:
                     self.sock.sendto(serialized_video_feed, self.server_address)
-                    serialized_instruction, _ = self.sock.recvfrom(self.MAX_UDP_PACKET_SIZE)
-
-                    instruction = Instruction()
-                    instruction.ParseFromString(serialized_instruction)
-                    print("Received instruction:", instruction.messageInstruction)
                 except Exception as e:
                     print(f"An error occurred: {e}")
             else:
