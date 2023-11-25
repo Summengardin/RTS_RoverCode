@@ -27,22 +27,14 @@ if (Tof_back.sensor_init() == None):					 # Begin returns 0 on a good init
 
 while(True):
 	try:
-		Tof_front.start_ranging()						 # Write configuration bytes to initiate measurement
-		time.sleep(.005)
-		distance = Tof_front.get_distance()	 # Get the result of the measurement from the sensor
-		time.sleep(.005)
-		Tof_front.stop_ranging()
+		distance = Tof_front.get_distance()	 # Get the result of the measurement from the senso
 
 		distanceInches = distance / 25.4
 		distanceFeet = distanceInches / 12.0
 
 		print("Distance front(mm): %s Distance front(ft): %s" % (distance, distanceFeet))
 
-		Tof_back.start_ranging()						 # Write configuration bytes to initiate measurement
-		time.sleep(.005)
 		distance = Tof_back.get_distance()	 # Get the result of the measurement from the sensor
-		time.sleep(.005)
-		Tof_back.stop_ranging()
 
 		distanceInches = distance / 25.4
 		distanceFeet = distanceInches / 12.0
