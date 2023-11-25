@@ -1,15 +1,19 @@
 import qwiic_vl53l1x as qwiic_dist
 import qwiic_tca9548a as qwiic_mux
 import time
+import sys
 
 
-Mux = qwiic_mux.QwiicTCA9548A(29)
+mux_address = sys.argv[1] if len(sys.argv) > 1 else 0x70
+
+Mux = qwiic_mux.QwiicTCA9548A(mux_address)
 Tof_front = qwiic_dist.QwiicVL53L1X()
 Tof_back = qwiic_dist.QwiicVL53L1X()
 
 	
 if (Mux.is_connected() == False):						 # Begin returns 0 on a good init
     print("The Qwiic Mux device isn't connected to the system. Please check your connection")
+    exit(1) 
 
 
 # Enable channel 3 and 7
@@ -36,3 +40,4 @@ while(True):
     except Exception as e:
         print(e)
         break
+
