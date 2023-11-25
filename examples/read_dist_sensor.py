@@ -10,6 +10,8 @@ Tof_back = qwiic_dist.QwiicVL53L1X()
 
 print("Mux channels enabled:")
 Mux.list_channels()
+
+time.sleep(5)
 	
 # Enable channel 3 and 7
 Mux.enable_channels(3)
@@ -40,6 +42,7 @@ while(True):
 		distanceFeet = distanceInches / 12.0
 
 		print("Distance front(mm): %s Distance front(ft): %s" % (distance, distanceFeet))
+		time.sleep(1)
 
 	except Exception as e:
 		print(e)
