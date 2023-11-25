@@ -1,4 +1,3 @@
-import smbus
 import qwiic_vl53l1x as qwiic_dist
 import qwiic_tca9548a as qwiic_mux
 import time
@@ -8,9 +7,6 @@ Mux = qwiic_mux.QwiicTCA9548A()
 Tof_front = qwiic_dist.QwiicVL53L1X()
 Tof_back = qwiic_dist.QwiicVL53L1X()
 
-bus_number = 1  # 1 for Rasp Pi rev 2 and 3
-bus = smbus.SMBus(bus_number)
-mux_address = 0x70  # Replace with your mux's I2C address
 
 print("Mux channels enabled:")
 Mux.list_channels()
