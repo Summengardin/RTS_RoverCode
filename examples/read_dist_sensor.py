@@ -8,15 +8,15 @@ Tof_front = qwiic_dist.QwiicVL53L1X()
 Tof_back = qwiic_dist.QwiicVL53L1X()
 
 
-print("Mux channels enabled:")
-Mux.list_channels()
 
-time.sleep(5)
+
+
 	
 # Enable channel 3 and 7
 Mux.enable_channels(3)
 Mux.enable_channels(7)
-
+Mux.list_channels()
+time.sleep(3)
 
 if (Tof_front.sensor_init() == None):					 # Begin returns 0 on a good init
 	print("Sensor in front online!\n")
