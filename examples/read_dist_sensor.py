@@ -41,7 +41,7 @@ while(True):
 		distanceInches = distance / 25.4
 		distanceFeet = distanceInches / 12.0
 
-		print("Distance front(mm): %s Distance front(ft): %s" % (distance, distanceFeet))
+		print("Distance back(mm): %s Distance back(ft): %s" % (distance, distanceFeet))
 		time.sleep(1)
 
 	except Exception as e:
