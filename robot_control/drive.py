@@ -110,6 +110,13 @@ class Rover(SpheroRvrObserver):
                 self.raw_motors(int(left_direction), int(left_velocity), int(right_direction), int(right_velocity))
             elif(drive_mode == 'heading'):
                 rvr.drive_with_heading(int(speed), int(head), 0)
+        
+
+    def set_all_leds_rgb(self, r, g, b):
+        self.set_all_leds(
+            RvrLedGroups.all_lights.value,
+            [color for x in range(0, 10) for color in [r, g, b]]
+        )
 
             
 
