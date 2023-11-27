@@ -80,7 +80,7 @@ class Rover(SpheroRvrObserver):
         print(f"Connecting to server at: {host}:{port}...")
         self.client = tcp_client.tcp_client()
         self.client.connect(host, port)
-        print(f"Connected to server at: {host}:{port}")
+        print(f"Connected")
         self.set_all_leds_rgb(0,255,0)
 
 
