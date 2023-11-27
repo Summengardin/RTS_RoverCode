@@ -27,7 +27,6 @@ class PiCamStreamer:
     def stream_video(self):
         stream = io.BytesIO()
         for _ in self.camera.capture_continuous(stream, format='jpeg', use_video_port=True):
-            # Truncate the stream to the current length (this is necessary to prepare it for the next frame)
             stream.truncate()
             stream.seek(0)
 
