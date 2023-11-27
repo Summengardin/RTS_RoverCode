@@ -63,12 +63,13 @@ def parse_cmd(cmd_dict):
 class Rover(SpheroRvrObserver):
     def __init__(self) -> None:
         SpheroRvrObserver.__init__(self)
+        self.LedControl = RvrLedGroups()
         #self.Blinker = blinker.Blinker(1)
         self.wake()
         time.sleep(2)
         #self.reset_heading()
 
-        self.set_all_leds_rgb(255,255,0)
+        self.LedControl.set_all_leds_rgb(255,255,0)
 
         self.controller_port = 9091
         self.connect(self.controller_ip, self.controller_port)
@@ -78,7 +79,7 @@ class Rover(SpheroRvrObserver):
         self.client = tcp_client.tcp_client()
         self.client.connect(host, port)
         print(f"Connected to server at: {host}:{port}")
-        self.set_all_leds_rgb(0,255,0)
+        self.LedControl.set_all_leds_rgb(0,255,0)
 
 
     def run(self):
