@@ -63,6 +63,7 @@ def parse_cmd(cmd_dict):
 class Rover(SpheroRvrObserver):
     def __init__(self) -> None:
         SpheroRvrObserver.__init__(self)
+        
         #self.Blinker = blinker.Blinker(1)
         self.wake()
         time.sleep(2)
@@ -70,6 +71,7 @@ class Rover(SpheroRvrObserver):
 
         self.set_all_leds_rgb(255,255,0)
 
+        self.controller_ip = "10.25.16.36"
         self.controller_port = 9091
         self.connect(self.controller_ip, self.controller_port)
 
