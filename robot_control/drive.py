@@ -77,6 +77,7 @@ class Rover(SpheroRvrObserver):
 
 
     def connect(self, host, port):
+        print(f"Connecting to server at: {host}:{port}...")
         self.client = tcp_client.tcp_client()
         self.client.connect(host, port)
         print(f"Connected to server at: {host}:{port}")
