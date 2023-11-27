@@ -83,6 +83,12 @@ class Rover(SpheroRvrObserver):
         print(f"Connected")
         self.set_all_leds_rgb(0,255,0)
 
+    def stop(self):
+        self.set_all_leds_rgb(255,0,0)
+        self.reset_heading()
+        self.close()
+        self.client.close()
+
 
     def run(self):
         while True:
@@ -142,7 +148,7 @@ def main():
             print('\nProgram terminated with keyboard interrupt.')
             break
 
-    rover.close() 
+    rover.stop() 
 
 
 
