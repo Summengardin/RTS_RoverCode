@@ -66,7 +66,7 @@ class Rover(SpheroRvrObserver):
         #self.Blinker = blinker.Blinker(1)
         self.wake()
         time.sleep(2)
-        self.reset_heading()
+        #self.reset_heading()
 
         self.set_all_leds_rgb(255,255,0)
 
