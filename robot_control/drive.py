@@ -63,7 +63,7 @@ def parse_cmd(cmd_dict):
 class Rover(SpheroRvrObserver):
     def __init__(self) -> None:
         SpheroRvrObserver.__init__(self)
-        self.Blinker = blinker.Blinker(1)
+        #self.Blinker = blinker.Blinker(1)
         self.wake()
         time.sleep(2)
         self.reset_heading()
@@ -73,16 +73,6 @@ class Rover(SpheroRvrObserver):
         self.controller_port = 9091
         self.connect(self.controller_ip, self.controller_port)
 
-
-    def blinkLeds(self):
-        while True:
-            self.set_all_leds(
-                led_group=RvrLedGroups.all_lights.value,
-                led_brightness_values=[color for _ in range(10) for color in range(0, 256, 51)]
-            )
-            time.sleep(2)
-            self.set_all_leds_off(self)
-            time.sleep(2)
 
     def connect(self, host, port):
         self.client = tcp_client.tcp_client()
