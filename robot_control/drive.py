@@ -8,6 +8,10 @@ import time
 import communication.tcp_client as tcp_client
 import json
 from sphero_sdk import SpheroRvrObserver
+from sphero_sdk import RvrLedGroups
+
+import blinker
+import threading
 
 
 MAX_SPEED = 255
@@ -55,61 +59,87 @@ def parse_cmd(cmd_dict):
     return drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head
 
 
-def main():
-    rvr.wake()
-    time.sleep(2)
-    client = tcp_client.tcp_client()
-    client.connect("10.22.192.34", 9091)
-    print(f"Connected to server at: 10.22.192.34:9091")
 
-    rvr.drive_control.reset_heading()
+class Rover(SpheroRvrObserver):
+    def __init__(self) -> None:
+        SpheroRvrObserver.__init__(self)
+        self.Blinker = blinker.Blinker(1)
+        self.wake()
+        time.sleep(2)
+        self.reset_heading()
 
-    try:
-        head = 0
-        speed = 64
+        self.set_all_leds_rgb(255,255,0)
+
+        self.controller_port = 9091
+        self.connect(self.controller_ip, self.controller_port)
+
+
+    def blinkLeds(self):
+        while True:
+            self.set_all_leds(
+                led_group=RvrLedGroups.all_lights.value,
+                led_brightness_values=[color for _ in range(10) for color in range(0, 256, 51)]
+            )
+            time.sleep(2)
+            self.set_all_leds_off(self)
+            time.sleep(2)
+
+    def connect(self, host, port):
+        self.client = tcp_client.tcp_client()
+        self.client.connect(host, port)
+        print(f"Connected to server at: {host}:{port}")
+        self.set_all_leds_rgb(0,255,0)
+
+
+    def run(self):
         while True:
             try:
-                recv = client.recv()
+                recv = self.client.recv()
             except:
                 print("Connection lost, reconnecting...")
                 time.sleep(3)
-                client = tcp_client.tcp_client()
-                client.connect("10.22.192.34", 9091)
-                print(f"Connected to server at: 10.22.192.34:9091")
+                self.connect(self.controller_ip, self.controller_port)
+                continue
+            
+            try:
+                cmd_dict = json.loads(recv)
+            except:
+                print("Error parsing json")
                 continue
 
-            cmd_dict = json.loads(recv)
             print(cmd_dict)
-
 
             drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head = parse_cmd(cmd_dict)
 
-
-            if (speed > MAX_SPEED):
-                speed = MAX_SPEED
-                left_direction = MAX_SPEED/255 * left_direction
-                right_direction = MAX_SPEED/255 * right_direction
-            elif (speed < 0):
-                speed = 0
-
-            head = head % 360
-
-            print("Heading: " + str(head))
-            print("left_velocity: " + str(left_velocity))
-            print("right_velocity: " + str(right_velocity))
+            if (left_velocity > MAX_SPEED or right_velocity > MAX_SPEED):
+                left_velocity = MAX_SPEED
+                right_velocity = MAX_SPEED
 
             if (drive_mode == 'tank'):
-                rvr.raw_motors(int(left_direction), int(left_velocity), int(right_direction), int(right_velocity))
+                self.raw_motors(int(left_direction), int(left_velocity), int(right_direction), int(right_velocity))
             elif(drive_mode == 'heading'):
                 rvr.drive_with_heading(int(speed), int(head), 0)
 
-
-    except KeyboardInterrupt:
-        print('\nProgram terminated with keyboard interrupt.')
+            
 
 
-    finally:
-        rvr.close()
+def main():
+    rover = Rover()
+
+    rover_thread = threading.Thread(target=rover.run)
+    rover_thread.daemon = True
+
+    rover_thread.start()
+
+    while True:
+        try:
+            time.sleep(1)
+        except KeyboardInterrupt:
+            print('\nProgram terminated with keyboard interrupt.')
+            break
+
+    rover.close() 
+
 
 
 if __name__ == '__main__':
