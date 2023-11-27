@@ -69,7 +69,7 @@ class Rover(SpheroRvrObserver):
         time.sleep(2)
         #self.reset_heading()
 
-        self.set_all_leds_rgb(255,255,0)
+        self.set_all_leds_rgb(255,125,0)
 
         self.controller_ip = "10.25.16.36"
         self.controller_port = 9091
