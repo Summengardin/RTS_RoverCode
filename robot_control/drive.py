@@ -21,6 +21,20 @@ rvr = SpheroRvrObserver()
 prev_time = 0
 
 def parse_cmd(cmd_dict):
+    '''
+    Parses the json-command and returns the drive mode and motor commands
+    Expects a json with the following format:
+    {
+        "drive_mode": "tank" or "heading",
+        "left_direction": 0, 1 or 2,
+        "left_velocity": 0-255,
+        "right_direction": 0, 1 or 2,
+        "right_velocity": 0-255,
+        "speed": 0-255,
+        "heading": 0-359
+    }
+    
+    '''
     try :
         drive_mode = cmd_dict['drive_mode']
     except:
@@ -68,8 +82,6 @@ class Rover(SpheroRvrObserver):
         self.wake()
         time.sleep(2)
         #self.reset_heading()
-
-        
 
         self.controller_ip = ip
         self.controller_port = 9091
