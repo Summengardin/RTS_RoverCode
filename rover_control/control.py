@@ -103,11 +103,41 @@ def parse_cmd(cmd_dict):
     return drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head, tilt, pan
 
 
+def parse_cmd_dict(cmd_dict) -> dict:
+    '''
+    Parses the json-command and returns a dictionary with the commands.
+    If a command is not included in the json, it returns None for that command.
+    '''
+    parsed_cmd = {
+        "drive_mode": cmd_dict.get('drive_mode', 'tank'),
+        "left_direction": cmd_dict.get('left_direction'),
+        "left_velocity": cmd_dict.get('left_velocity'),
+        "right_direction": cmd_dict.get('right_direction'),
+        "right_velocity": cmd_dict.get('right_velocity'),
+        "speed": cmd_dict.get('speed'),
+        "heading": cmd_dict.get('heading'),
+        "servo_tilt": cmd_dict.get('servo_tilt'),
+        "servo_pan": cmd_dict.get('servo_pan')
+    }
+
+    return parsed_cmd
+
 
 class Rover(SpheroRvrObserver):
     def __init__(self, ip) -> None:
         SpheroRvrObserver.__init__(self)
         self.set_all_leds_rgb(255,125,0)
+
+        # Initialize last known states
+        self.last_left_direction = 0
+        self.last_left_velocity = 0
+        self.last_right_direction = 0
+        self.last_right_velocity = 0
+        self.last_speed = 0
+        self.last_head = 0
+        self.last_tilt = 50
+        self.last_pan = 50
+
         #self.Blinker = blinker.Blinker(1)
         self.wake()
         time.sleep(2)
@@ -172,8 +202,18 @@ class Rover(SpheroRvrObserver):
             print(cmd_dict)
 
             drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head, tilt, pan = parse_cmd(cmd_dict)
+            parsed_cmd = parse_cmd_dict(cmd_dict)
 
-            
+            self.last_left_direction = parsed_cmd['left_direction'] if parsed_cmd['left_direction'] is not None else self.last_left_direction
+            self.last_left_velocity = parsed_cmd['left_velocity'] if parsed_cmd['left_velocity'] is not None else self.last_left_velocity
+            self.last_right_direction = parsed_cmd['right_direction'] if parsed_cmd['right_direction'] is not None else self.last_right_direction
+            self.last_right_velocity = parsed_cmd['right_velocity'] if parsed_cmd['right_velocity'] is not None else self.last_right_velocity
+            self.last_speed = parsed_cmd['speed'] if parsed_cmd['speed'] is not None else self.last_speed
+            self.last_head = parsed_cmd['heading'] if parsed_cmd['heading'] is not None else self.last_head
+            self.last_tilt = parsed_cmd['servo_tilt'] if parsed_cmd['servo_tilt'] is not None else self.last_tilt
+            self.last_pan = parsed_cmd['servo_pan'] if parsed_cmd['servo_pan'] is not None else self.last_pan
+        
+
             tilt = MAX_TILT if tilt > MAX_TILT else MIN_TILT if tilt < MIN_TILT else tilt
             pan = MAX_PAN if pan > MAX_PAN else MIN_PAN if pan < MIN_PAN else pan
 
