@@ -109,7 +109,7 @@ def parse_cmd_dict(cmd_dict) -> dict:
     If a command is not included in the json, it returns None for that command.
     '''
     parsed_cmd = {
-        "drive_mode": cmd_dict.get('drive_mode', 'tank'),
+        "drive_mode": cmd_dict.get('drive_mode'),
         "left_direction": cmd_dict.get('left_direction'),
         "left_velocity": cmd_dict.get('left_velocity'),
         "right_direction": cmd_dict.get('right_direction'),
@@ -129,6 +129,7 @@ class Rover(SpheroRvrObserver):
         self.set_all_leds_rgb(255,125,0)
 
         # Initialize last known states
+        self.last_drive_mode = 'tank'
         self.last_left_direction = 0
         self.last_left_velocity = 0
         self.last_right_direction = 0
@@ -204,7 +205,7 @@ class Rover(SpheroRvrObserver):
 
             print(cmd_dict)
 
-            drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head, tilt, pan = parse_cmd(cmd_dict)
+            #drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head, tilt, pan = parse_cmd(cmd_dict)
             parsed_cmd = parse_cmd_dict(cmd_dict)
 
             self.last_left_direction = parsed_cmd['left_direction'] if parsed_cmd['left_direction'] is not None else self.last_left_direction
@@ -217,20 +218,20 @@ class Rover(SpheroRvrObserver):
             self.last_pan = parsed_cmd['servo_pan'] if parsed_cmd['servo_pan'] is not None else self.last_pan
         
 
-            tilt = MAX_TILT if tilt > MAX_TILT else MIN_TILT if tilt < MIN_TILT else tilt
+            self.last_tilt = MAX_TILT if self.last_tilt > MAX_TILT else MIN_TILT if self.last_tilt < MIN_TILT else self.last_tilt
             pan = MAX_PAN if pan > MAX_PAN else MIN_PAN if pan < MIN_PAN else pan
 
-            self.move_servo(TILT_SERVO, tilt)
+            self.move_servo(TILT_SERVO, self.last_tilt)
             self.move_servo(PAN_SERVO, pan, 180)
 
-            if (left_velocity > MAX_SPEED or right_velocity > MAX_SPEED):
-                left_velocity = MAX_SPEED
-                right_velocity = MAX_SPEED
+            if (self.last_left_velocity > MAX_SPEED or self.last_right_velocity > MAX_SPEED):
+                self.last_left_velocity = MAX_SPEED
+                self.last_right_velocity = MAX_SPEED
 
-            if (drive_mode == 'tank'):
-                self.drive(int(left_direction), int(left_velocity), int(right_direction), int(right_velocity))
-            elif(drive_mode == 'heading'):
-                self.drive_with_heading(int(speed), int(head), 0)
+            if (self.last_drive_mode == 'tank'):
+                self.drive(int(self.last_left_direction), int(self.last_left_velocity), int(self.last_right_direction), int(self.last_right_velocity))
+            elif(self.last_drive_mode == 'heading'):
+                self.drive_with_heading(int(self.last_speed), int(self.last_heading), 0)
         
         print("Rover not running anymore")
 
