@@ -101,7 +101,9 @@ class Rover(SpheroRvrObserver):
     def stop(self):
         self.running = False
         self.set_all_leds_rgb(255,0,0)
+        print("Closing connection...")
         self.client.close()
+        print("Closing rover...")
         self.close()
         
 
@@ -168,6 +170,7 @@ def main():
     rover.stop()
     rover_thread.join() 
 
+    print("Rover stopped")
 
 
 if __name__ == '__main__':
