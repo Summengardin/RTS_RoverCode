@@ -119,7 +119,7 @@ def parse_cmd_dict(cmd_dict) -> dict:
         "servo_tilt": cmd_dict.get('servo_tilt'),
         "servo_pan": cmd_dict.get('servo_pan')
     }
-
+    print(parsed_cmd)
     return parsed_cmd
 
 
