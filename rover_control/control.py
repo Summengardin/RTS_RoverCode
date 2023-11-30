@@ -139,14 +139,16 @@ class Rover(SpheroRvrObserver):
         self.last_tilt = 30
         self.last_pan = 30
 
-        #self.Blinker = blinker.Blinker(1)
-        self.wake()
-        time.sleep(2)
-        #self.reset_heading()
         self.servos = pi_servo_hat.PiServoHat()
         self.servos.restart()
         self.move_servo(TILT_SERVO, self.last_tilt)
         self.move_servo(PAN_SERVO, self.last_pan, 180)
+
+        #self.Blinker = blinker.Blinker(1)
+        self.wake()
+        time.sleep(2)
+        #self.reset_heading()
+        
 
 
         self.controller_ip = ip
