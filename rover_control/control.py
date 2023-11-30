@@ -2,9 +2,8 @@ print("Starting rover... Importing modules")
 
 import sys
 
-sys.path.append('../../dependencies/sphero-sdk-raspberrypi-python')
-sys.path.append('../')
-sys.path.append('D:\Data\Dev\sphero-sdk-raspberrypi-python')
+sys.path.append('/home/MartinElias/dev/dependencies/sphero-sdk-raspberrypi-python')
+sys.path.append('/home/MartinElias/dev')
 
 import time
 import json
