@@ -24,7 +24,7 @@ if __name__ == "__main__":
         args.ip = '10.22.192.34'
     # args = parse_args()
     # main(args)
-    controller = control.Rover(args.ip, 9091)
+    controller = control.Rover(args.ip)
     controller_thread = threading.Thread(target=controller.run)
     controller_thread.daemon = True
     controller_thread.start()
