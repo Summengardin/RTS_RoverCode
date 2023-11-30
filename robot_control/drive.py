@@ -88,6 +88,7 @@ class Rover(SpheroRvrObserver):
         self.controller_ip = ip
         self.controller_port = 9091
         self.connect(self.controller_ip, self.controller_port)
+        self.running = False
 
 
     def connect(self, host, port):
@@ -98,6 +99,7 @@ class Rover(SpheroRvrObserver):
         self.set_all_leds_rgb(0,255,0)
 
     def stop(self):
+        self.running = False
         self.set_all_leds_rgb(255,0,0)
         self.client.close()
         self.close()
@@ -105,7 +107,8 @@ class Rover(SpheroRvrObserver):
 
 
     def run(self):
-        while True:
+        self.running = True
+        while self.running:
             try:
                 recv = self.client.recv()
             except:
@@ -158,9 +161,10 @@ def main():
     try:
         while True:
             time.sleep(1)   
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:   
         print('\nProgram terminated with keyboard interrupt.')
 
+    rover_thread.join()
     rover.stop() 
 
 
