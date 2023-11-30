@@ -175,9 +175,9 @@ class Rover(SpheroRvrObserver):
     def stop(self):
         self.drive(0,0,0,0)
 
-    def move_servo(self, servo, position):
+    def move_servo(self, servo, position, swing = 90):
         print(f"Moving servo {servo} to position {position}")
-        self.servos.move_servo_position(servo, position)
+        self.servos.move_servo_position(servo, position, swing)
 
     def run(self):
         self.running = True
@@ -219,7 +219,7 @@ class Rover(SpheroRvrObserver):
             pan = MAX_PAN if pan > MAX_PAN else MIN_PAN if pan < MIN_PAN else pan
 
             self.move_servo(TILT_SERVO, tilt)
-            self.move_servo(PAN_SERVO, pan)
+            self.move_servo(PAN_SERVO, pan, 180)
 
             if (left_velocity > MAX_SPEED or right_velocity > MAX_SPEED):
                 left_velocity = MAX_SPEED
