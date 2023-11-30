@@ -135,8 +135,8 @@ class Rover(SpheroRvrObserver):
         self.last_right_velocity = 0
         self.last_speed = 0
         self.last_head = 0
-        self.last_tilt = 50
-        self.last_pan = 50
+        self.last_tilt = 30
+        self.last_pan = 30
 
         #self.Blinker = blinker.Blinker(1)
         self.wake()
