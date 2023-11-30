@@ -153,12 +153,11 @@ def main():
 
     rover_thread.start()
 
-    while True:
-        try:
-            time.sleep(1)
-        except KeyboardInterrupt:
-            print('\nProgram terminated with keyboard interrupt.')
-            break
+    try:
+        while True:
+            time.sleep(1)   
+    except KeyboardInterrupt:
+        print('\nProgram terminated with keyboard interrupt.')
 
     rover.stop() 
 
