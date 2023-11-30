@@ -136,7 +136,7 @@ class Rover(SpheroRvrObserver):
         self.last_speed = 0
         self.last_head = 0
         self.last_tilt = 30
-        self.last_pan = 30
+        self.last_pan = 40
 
         self.servos = pi_servo_hat.PiServoHat()
         self.servos.restart()
