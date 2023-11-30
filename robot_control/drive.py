@@ -138,6 +138,7 @@ class Rover(SpheroRvrObserver):
             elif(drive_mode == 'heading'):
                 rvr.drive_with_heading(int(speed), int(head), 0)
         
+        print("Rover not running anymore")
 
     def set_all_leds_rgb(self, r, g, b):
         self.set_all_leds(
