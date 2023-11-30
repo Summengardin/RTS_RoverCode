@@ -103,8 +103,10 @@ class Rover(SpheroRvrObserver):
         self.set_all_leds_rgb(255,0,0)
         print("Closing connection...")
         self.client.close()
+        print("Closed")
         print("Closing rover...")
         self.close()
+        print("Closed")
         
 
 
