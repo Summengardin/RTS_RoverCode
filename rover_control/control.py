@@ -144,6 +144,8 @@ class Rover(SpheroRvrObserver):
         #self.reset_heading()
         self.servos = pi_servo_hat.PiServoHat()
         self.servos.restart()
+        self.move_servo(TILT_SERVO, self.last_tilt)
+        self.move_servo(PAN_SERVO, self.last_pan, 180)
 
 
         self.controller_ip = ip
