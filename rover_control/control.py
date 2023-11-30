@@ -29,7 +29,7 @@ servos.restart()
 
 MAX_SPEED = 255
 MAX_TILT = 180
-MIN_TILT = 0
+MIN_TILT = -50
 MAX_PAN = 90
 MIN_PAN = 20
 
