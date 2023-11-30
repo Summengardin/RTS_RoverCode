@@ -119,7 +119,6 @@ def parse_cmd_dict(cmd_dict) -> dict:
         "servo_tilt": cmd_dict.get('servo_tilt'),
         "servo_pan": cmd_dict.get('servo_pan')
     }
-    print(parsed_cmd)
     return parsed_cmd
 
 
@@ -211,14 +210,14 @@ class Rover(SpheroRvrObserver):
             parsed_cmd = parse_cmd_dict(cmd_dict)
 
             self.last_drive_mode = parsed_cmd['drive_mode'] if parsed_cmd['drive_mode'] is not None else self.last_drive_mode
-            self.last_left_direction = parsed_cmd['left_direction'] if parsed_cmd['left_direction'] is not None else self.last_left_direction
-            self.last_left_velocity = parsed_cmd['left_velocity'] if parsed_cmd['left_velocity'] is not None else self.last_left_velocity
-            self.last_right_direction = parsed_cmd['right_direction'] if parsed_cmd['right_direction'] is not None else self.last_right_direction
-            self.last_right_velocity = parsed_cmd['right_velocity'] if parsed_cmd['right_velocity'] is not None else self.last_right_velocity
-            self.last_speed = parsed_cmd['speed'] if parsed_cmd['speed'] is not None else self.last_speed
-            self.last_head = parsed_cmd['heading'] if parsed_cmd['heading'] is not None else self.last_head
-            self.last_tilt = parsed_cmd['servo_tilt'] if parsed_cmd['servo_tilt'] is not None else self.last_tilt
-            self.last_pan = parsed_cmd['servo_pan'] if parsed_cmd['servo_pan'] is not None else self.last_pan
+            self.last_left_direction = int(parsed_cmd['left_direction']) if parsed_cmd['left_direction'] is not None else self.last_left_direction
+            self.last_left_velocity = int(parsed_cmd['left_velocity']) if parsed_cmd['left_velocity'] is not None else self.last_left_velocity
+            self.last_right_direction = int(parsed_cmd['right_direction']) if parsed_cmd['right_direction'] is not None else self.last_right_direction
+            self.last_right_velocity = int(parsed_cmd['right_velocity']) if parsed_cmd['right_velocity'] is not None else self.last_right_velocity
+            self.last_speed = int(parsed_cmd['speed']) if parsed_cmd['speed'] is not None else self.last_speed
+            self.last_head = int(parsed_cmd['heading']) if parsed_cmd['heading'] is not None else self.last_head
+            self.last_tilt = int(parsed_cmd['servo_tilt']) if parsed_cmd['servo_tilt'] is not None else self.last_tilt
+            self.last_pan = int(parsed_cmd['servo_pan']) if parsed_cmd['servo_pan'] is not None else self.last_pan
         
 
             self.last_tilt = MAX_TILT if self.last_tilt > MAX_TILT else MIN_TILT if self.last_tilt < MIN_TILT else self.last_tilt
