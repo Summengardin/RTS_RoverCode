@@ -30,8 +30,8 @@ servos.restart()
 MAX_SPEED = 255
 MAX_TILT = 180
 MIN_TILT = -50
-MAX_PAN = 90
-MIN_PAN = 20
+MAX_PAN = 180
+MIN_PAN = 0
 
 rvr = SpheroRvrObserver()
 
