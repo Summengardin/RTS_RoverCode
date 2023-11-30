@@ -164,8 +164,9 @@ def main():
     except KeyboardInterrupt:   
         print('\nProgram terminated with keyboard interrupt.')
 
-    rover_thread.join()
-    rover.stop() 
+    
+    rover.stop()
+    rover_thread.join() 
 
 
 
