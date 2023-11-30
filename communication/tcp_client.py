@@ -7,6 +7,7 @@ class tcp_client:
 
     def __init__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.setblocking(0)
 
     def connect(self, host, port):
         self.socket.connect((host, port))

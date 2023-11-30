@@ -106,9 +106,13 @@ class Rover(SpheroRvrObserver):
         print("Closed")
         print("Closing rover...")
         self.close()
-        print("Closed")
-        
+        print("Closed")  
 
+    def drive(self, left_dir, left_vel, right_dir, right_vel):
+        self.raw_motors(left_dir, left_vel, right_dir, right_vel)
+
+    def stop(self):
+        self.drive(0,0,0,0)
 
     def run(self):
         self.running = True
@@ -117,10 +121,14 @@ class Rover(SpheroRvrObserver):
                 recv = self.client.recv()
             except:
                 print("Connection lost, reconnecting...")
+                self.stop()
                 time.sleep(3)
                 self.connect(self.controller_ip, self.controller_port)
                 continue
             
+            if recv == "":
+                continue
+
             try:
                 cmd_dict = json.loads(recv)
             except:
@@ -136,9 +144,9 @@ class Rover(SpheroRvrObserver):
                 right_velocity = MAX_SPEED
 
             if (drive_mode == 'tank'):
-                self.raw_motors(int(left_direction), int(left_velocity), int(right_direction), int(right_velocity))
+                self.drive(int(left_direction), int(left_velocity), int(right_direction), int(right_velocity))
             elif(drive_mode == 'heading'):
-                rvr.drive_with_heading(int(speed), int(head), 0)
+                self.drive_with_heading(int(speed), int(head), 0)
         
         print("Rover not running anymore")
 
