@@ -176,7 +176,7 @@ class Rover(SpheroRvrObserver):
     def drive(self, left_dir, left_vel, right_dir, right_vel):
         self.raw_motors(left_dir, left_vel, right_dir, right_vel)
 
-    def stop(self):
+    def stop_rover(self):
         self.drive(0,0,0,0)
 
     def move_servo(self, servo, position, swing = 90):
@@ -190,7 +190,7 @@ class Rover(SpheroRvrObserver):
                 recv = self.client.recv()
             except:
                 print("Connection lost, reconnecting...")
-                self.stop()
+                self.stop_rover()
                 time.sleep(3)
                 self.connect(self.controller_ip, self.controller_port)
                 continue
