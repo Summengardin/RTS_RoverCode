@@ -220,10 +220,10 @@ class Rover(SpheroRvrObserver):
         
 
             self.last_tilt = MAX_TILT if self.last_tilt > MAX_TILT else MIN_TILT if self.last_tilt < MIN_TILT else self.last_tilt
-            pan = MAX_PAN if pan > MAX_PAN else MIN_PAN if pan < MIN_PAN else pan
+            self.last_pan = MAX_PAN if self.last_pan > MAX_PAN else MIN_PAN if self.last_pan < MIN_PAN else self.last_pan
 
             self.move_servo(TILT_SERVO, self.last_tilt)
-            self.move_servo(PAN_SERVO, pan, 180)
+            self.move_servo(PAN_SERVO, self.last_pan, 180)
 
             if (self.last_left_velocity > MAX_SPEED or self.last_right_velocity > MAX_SPEED):
                 self.last_left_velocity = MAX_SPEED
