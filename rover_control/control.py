@@ -208,6 +208,7 @@ class Rover(SpheroRvrObserver):
             #drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head, tilt, pan = parse_cmd(cmd_dict)
             parsed_cmd = parse_cmd_dict(cmd_dict)
 
+            self.last_drive_mode = parsed_cmd['drive_mode'] if parsed_cmd['drive_mode'] is not None else self.last_drive_mode
             self.last_left_direction = parsed_cmd['left_direction'] if parsed_cmd['left_direction'] is not None else self.last_left_direction
             self.last_left_velocity = parsed_cmd['left_velocity'] if parsed_cmd['left_velocity'] is not None else self.last_left_velocity
             self.last_right_direction = parsed_cmd['right_direction'] if parsed_cmd['right_direction'] is not None else self.last_right_direction
