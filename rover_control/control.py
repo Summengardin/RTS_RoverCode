@@ -176,6 +176,7 @@ class Rover(SpheroRvrObserver):
         self.drive(0,0,0,0)
 
     def move_servo(self, servo, position):
+        print(f"Moving servo {servo} to position {position}")
         self.servos.move_servo_position(servo, position)
 
     def run(self):
