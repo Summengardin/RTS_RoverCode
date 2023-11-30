@@ -1,3 +1,5 @@
+print("Starting rover... Importing modules")
+
 import sys
 
 sys.path.append('../../dependencies/sphero-sdk-raspberrypi-python')
