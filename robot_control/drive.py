@@ -99,8 +99,9 @@ class Rover(SpheroRvrObserver):
 
     def stop(self):
         self.set_all_leds_rgb(255,0,0)
-        self.close()
         self.client.close()
+        self.close()
+        
 
 
     def run(self):

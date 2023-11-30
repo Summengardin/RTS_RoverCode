@@ -11,6 +11,9 @@ class tcp_client:
     def connect(self, host, port):
         self.socket.connect((host, port))
 
+    def close(self):
+        self.socket.close()
+
     def send(self, data):
         msg = f"{data}".encode("utf-8")
         msg_size = len(msg)
