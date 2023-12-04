@@ -208,31 +208,43 @@ class Rover(SpheroRvrObserver):
             #drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head, tilt, pan = parse_cmd(cmd_dict)
             parsed_cmd = parse_cmd_dict(cmd_dict)
 
-            self.last_drive_mode = parsed_cmd['drive_mode'] if parsed_cmd['drive_mode'] is not None else self.last_drive_mode
-            self.last_left_direction = int(parsed_cmd['left_direction']) if parsed_cmd['left_direction'] is not None else self.last_left_direction
-            self.last_left_velocity = int(parsed_cmd['left_velocity']) if parsed_cmd['left_velocity'] is not None else self.last_left_velocity
-            self.last_right_direction = int(parsed_cmd['right_direction']) if parsed_cmd['right_direction'] is not None else self.last_right_direction
-            self.last_right_velocity = int(parsed_cmd['right_velocity']) if parsed_cmd['right_velocity'] is not None else self.last_right_velocity
-            self.last_speed = int(parsed_cmd['speed']) if parsed_cmd['speed'] is not None else self.last_speed
-            self.last_head = int(parsed_cmd['heading']) if parsed_cmd['heading'] is not None else self.last_head
-            self.last_tilt = int(parsed_cmd['servo_tilt']) if parsed_cmd['servo_tilt'] is not None else self.last_tilt
-            self.last_pan = int(parsed_cmd['servo_pan']) if parsed_cmd['servo_pan'] is not None else self.last_pan
+            self.drive_mode = parsed_cmd['drive_mode'] if parsed_cmd['drive_mode'] is not None else self.last_drive_mode
+            self.left_direction = int(parsed_cmd['left_direction']) if parsed_cmd['left_direction'] is not None else self.last_left_direction
+            self.left_velocity = int(parsed_cmd['left_velocity']) if parsed_cmd['left_velocity'] is not None else self.last_left_velocity
+            self.right_direction = int(parsed_cmd['right_direction']) if parsed_cmd['right_direction'] is not None else self.last_right_direction
+            self.right_velocity = int(parsed_cmd['right_velocity']) if parsed_cmd['right_velocity'] is not None else self.last_right_velocity
+            self.speed = int(parsed_cmd['speed']) if parsed_cmd['speed'] is not None else self.last_speed
+            self.head = int(parsed_cmd['heading']) if parsed_cmd['heading'] is not None else self.last_head
+            self.tilt = int(parsed_cmd['servo_tilt']) if parsed_cmd['servo_tilt'] is not None else self.last_tilt
+            self.pan = int(parsed_cmd['servo_pan']) if parsed_cmd['servo_pan'] is not None else self.last_pan
         
 
-            self.last_tilt = MAX_TILT if self.last_tilt > MAX_TILT else MIN_TILT if self.last_tilt < MIN_TILT else self.last_tilt
-            self.last_pan = MAX_PAN if self.last_pan > MAX_PAN else MIN_PAN if self.last_pan < MIN_PAN else self.last_pan
+            self.tilt = MAX_TILT if self.tilt > MAX_TILT else MIN_TILT if self.tilt < MIN_TILT else self.tilt
+            self.pan = MAX_PAN if self.pan > MAX_PAN else MIN_PAN if self.pan < MIN_PAN else self.pan
 
-            self.move_servo(TILT_SERVO, self.last_tilt)
-            self.move_servo(PAN_SERVO, self.last_pan, 180)
+            if (self.last_tilt != self.tilt):
+                self.move_servo(TILT_SERVO, self.tilt)
+            if (self.pan != self.last_pan):
+                self.move_servo(PAN_SERVO, self.pan, 180)
 
-            if (self.last_left_velocity > MAX_SPEED or self.last_right_velocity > MAX_SPEED):
-                self.last_left_velocity = MAX_SPEED
-                self.last_right_velocity = MAX_SPEED
+            if (self.left_velocity > MAX_SPEED or self.right_velocity > MAX_SPEED):
+                self.left_velocity = MAX_SPEED
+                self.right_velocity = MAX_SPEED
 
-            if (self.last_drive_mode == 'tank'):
-                self.drive(int(self.last_left_direction), int(self.last_left_velocity), int(self.last_right_direction), int(self.last_right_velocity))
-            elif(self.last_drive_mode == 'heading'):
-                self.drive_with_heading(int(self.last_speed), int(self.last_heading), 0)
+            if self.drive_mode == 'tank':
+                self.drive(int(self.left_direction), int(self.left_velocity), int(self.right_direction), int(self.right_velocity))
+            elif self.drive_mode == 'heading':
+                self.drive_with_heading(int(self.speed), int(self.heading), 0)
+
+            self.last_drive_mode = self.drive_mode
+            self.last_left_direction = self.left_direction
+            self.last_left_velocity = self.left_velocity
+            self.last_right_direction = self.right_direction
+            self.last_right_velocity = self.right_velocity
+            self.last_speed = self.speed
+            self.last_head = self.head
+            self.last_tilt = self.tilt
+            self.last_pan = self.pan
         
         print("Rover not running anymore")
 
