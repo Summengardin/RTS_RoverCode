@@ -1,6 +1,9 @@
 import argparse
+import threading
+import time
 
 from communication.udp_client import PiCamStreamer
+from rover_control import control
 
 
 def mainCamera(args):
@@ -16,9 +19,31 @@ def commsArgs():
 
 
 if __name__ == "__main__":
+    args = commsArgs()
+    if args.ip == '':
+        args.ip = '10.22.192.34'
     # args = parse_args()
     # main(args)
-    args = commsArgs()
+    controller = control.Rover(args.ip)
+    controller_thread = threading.Thread(target=controller.run)
+    controller_thread.daemon = True
+    controller_thread.start()
+
+    camera_thread = threading.Thread(target=mainCamera, args=(args,))
+    camera_thread.daemon = True
+    camera_thread.start()
+    
     print("Streaming to IP address:", args.ip)
-    mainCamera(args)
+
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("Exiting...")
+
+
+    controller.stop()
+    controller_thread.join()
+    camera_thread.join()
+
     print ("Done")
