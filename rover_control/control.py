@@ -161,7 +161,8 @@ class Rover():
                     continue
                 
                 if recv == "":
-                    continue
+                    print("Recv is empty")
+                    break
 
                 try:
                     cmd_dict = json.loads(recv)

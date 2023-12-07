@@ -25,11 +25,11 @@ if __name__ == "__main__":
     # args = parse_args()
     # main(args)
     controller = control.Rover(ip)
-    controller_thread = threading.Thread(target=controller.run)
+    controller_thread = threading.Thread(name="controller_thread", target=controller.run)
     controller_thread.daemon = True
     controller_thread.start()
 
-    camera_thread = threading.Thread(target=mainCamera, args=(ip,))
+    camera_thread = threading.Thread(name="camera_thread", target=mainCamera, args=(ip,))
     camera_thread.daemon = True
     camera_thread.start()
 
