@@ -36,70 +36,6 @@ rvr = SpheroRvrObserver()
 
 prev_time = 0
 
-def parse_cmd(cmd_dict):
-    '''
-    Parses the json-command and returns the drive mode and motor commands
-    Expects a json with the following format:
-    {
-        "drive_mode": "tank" or "heading",
-        "left_direction": 0, 1 or 2,
-        "left_velocity": 0-255,
-        "right_direction": 0, 1 or 2,
-        "right_velocity": 0-255,
-        "speed": 0-255,
-        "heading": 0-359,
-        "servo_tilt": 40-60,
-        "servo_pan": 20-90
-    }
-    
-    '''
-    try :
-        drive_mode = cmd_dict['drive_mode']
-    except:
-        drive_mode = 'tank'
-
-    try:
-        left_direction = int(cmd_dict['left_direction'])
-    except:
-        left_direction = 0
-    
-    try:
-        left_velocity = int(cmd_dict['left_velocity'])
-    except:
-        left_velocity = 0
-
-    try:
-        right_direction = int(cmd_dict['right_direction'])
-    except:
-        right_direction = 0
-
-    try:
-        right_velocity = int(cmd_dict['right_velocity'])
-    except:
-        right_velocity = 0
-
-    try:
-        speed = int(cmd_dict['speed'])
-    except:
-        speed = 0
-
-    try:
-        head = int(cmd_dict['heading'])
-    except:
-        head = 0
-
-    try:
-        tilt = int(cmd_dict['servo_tilt'])
-    except:
-        tilt = 50
-
-    try:
-        pan = int(cmd_dict['servo_pan'])
-    except:
-        pan = 50
-
-
-    return drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head, tilt, pan
 
 
 def parse_cmd_dict(cmd_dict) -> dict:
@@ -146,7 +82,7 @@ class Rover(SpheroRvrObserver):
         self.wake()
         time.sleep(2)
         #self.reset_heading()
-        
+
 
 
         self.controller_ip = ip
@@ -172,11 +108,11 @@ class Rover(SpheroRvrObserver):
         self.close()
         print("Closed")  
 
-    def drive(self, left_dir, left_vel, right_dir, right_vel):
+    def drive_rover(self, left_dir, left_vel, right_dir, right_vel):
         self.raw_motors(left_dir, left_vel, right_dir, right_vel)
 
     def stop_rover(self):
-        self.drive(0,0,0,0)
+        self.drive_rover(0,0,0,0)
 
     def move_servo(self, servo, position, swing = 90):
         print(f"Moving servo {servo} to position {position}")
@@ -185,6 +121,9 @@ class Rover(SpheroRvrObserver):
     def run(self):
         self.running = True
         while self.running:
+            
+            self.__print_sensors()
+
             try:
                 recv = self.client.recv()
             except:
@@ -207,18 +146,10 @@ class Rover(SpheroRvrObserver):
 
             #drive_mode, left_direction, left_velocity, right_direction, right_velocity, speed, head, tilt, pan = parse_cmd(cmd_dict)
             parsed_cmd = parse_cmd_dict(cmd_dict)
+            self.__update_commands(parsed_cmd)
 
-            self.drive_mode = parsed_cmd['drive_mode'] if parsed_cmd['drive_mode'] is not None else self.last_drive_mode
-            self.left_direction = int(parsed_cmd['left_direction']) if parsed_cmd['left_direction'] is not None else self.last_left_direction
-            self.left_velocity = int(parsed_cmd['left_velocity']) if parsed_cmd['left_velocity'] is not None else self.last_left_velocity
-            self.right_direction = int(parsed_cmd['right_direction']) if parsed_cmd['right_direction'] is not None else self.last_right_direction
-            self.right_velocity = int(parsed_cmd['right_velocity']) if parsed_cmd['right_velocity'] is not None else self.last_right_velocity
-            self.speed = int(parsed_cmd['speed']) if parsed_cmd['speed'] is not None else self.last_speed
-            self.head = int(parsed_cmd['heading']) if parsed_cmd['heading'] is not None else self.last_head
-            self.tilt = int(parsed_cmd['servo_tilt']) if parsed_cmd['servo_tilt'] is not None else self.last_tilt
-            self.pan = int(parsed_cmd['servo_pan']) if parsed_cmd['servo_pan'] is not None else self.last_pan
-        
-
+            
+    
             self.tilt = MAX_TILT if self.tilt > MAX_TILT else MIN_TILT if self.tilt < MIN_TILT else self.tilt
             self.pan = MAX_PAN if self.pan > MAX_PAN else MIN_PAN if self.pan < MIN_PAN else self.pan
 
@@ -232,7 +163,7 @@ class Rover(SpheroRvrObserver):
                 self.right_velocity = MAX_SPEED
 
             if self.drive_mode == 'tank':
-                self.drive(int(self.left_direction), int(self.left_velocity), int(self.right_direction), int(self.right_velocity))
+                self.drive_rover(int(self.left_direction), int(self.left_velocity), int(self.right_direction), int(self.right_velocity))
             elif self.drive_mode == 'heading':
                 self.drive_with_heading(int(self.speed), int(self.heading), 0)
 
@@ -254,7 +185,38 @@ class Rover(SpheroRvrObserver):
             [color for x in range(0, 10) for color in [r, g, b]]
         )
 
+
+    def __update_commands(self, cmd_dict):
+            self.drive_mode = cmd_dict['drive_mode'] if cmd_dict['drive_mode'] is not None else self.last_drive_mode
+            self.left_direction = int(cmd_dict['left_direction']) if cmd_dict['left_direction'] is not None else self.last_left_direction
+            self.left_velocity = int(cmd_dict['left_velocity']) if cmd_dict['left_velocity'] is not None else self.last_left_velocity
+            self.right_direction = int(cmd_dict['right_direction']) if cmd_dict['right_direction'] is not None else self.last_right_direction
+            self.right_velocity = int(cmd_dict['right_velocity']) if cmd_dict['right_velocity'] is not None else self.last_right_velocity
+            self.speed = int(cmd_dict['speed']) if cmd_dict['speed'] is not None else self.last_speed
+            self.head = int(cmd_dict['heading']) if cmd_dict['heading'] is not None else self.last_head
+            self.tilt = int(cmd_dict['servo_tilt']) if cmd_dict['servo_tilt'] is not None else self.last_tilt
+            self.pan = int(cmd_dict['servo_pan']) if cmd_dict['servo_pan'] is not None else self.last_pan
             
+
+    def __read_sensors(self):
+        self.battery_percentage = self.get_battery_percentage()
+        self.imu_data = self.get_imu_data()
+        self.accelerometer_data = self.get_raw_accelerometer_data()
+        self.velocity = self.get_raw_motors_data()
+        self.velocity = self.velocity['right_motor_emf_filtered'] if self.velocity['right_motor_emf_filtered'] > self.velocity['left_motor_emf_filtered'] else self.velocity['left_motor_emf_filtered']
+        self.velocity = self.velocity / 1000
+        self.velocity = self.velocity * 3.6
+        self.velocity = self.velocity * 10
+        self.velocity = round(self.velocity, 2)
+        self.velocity = self.velocity if self.velocity < 255 else 255
+
+    
+    def __print_sensors(self):
+        self.__read_sensors()
+        print(f"Battery: {self.battery_percentage}%")
+        print(f"IMU: {self.imu_data}")
+        print(f"Accelerometer: {self.accelerometer_data}")
+        print(f"Velocity: {self.velocity} km/h")
 
 
 def main():
