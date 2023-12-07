@@ -74,7 +74,7 @@ def battery_handler(battery_percentage):
 class Rover():
     def __init__(self, ip) -> None:
         self.rvr = SpheroRvrObserver()
-        self.rvr.set_all_leds_rgb(255,125,0)
+        self.set_all_leds_rgb(255,125,0)
 
         # Initialize last known states
         self.last_drive_mode = 'tank'
