@@ -159,20 +159,23 @@ class Rover():
 
     def run(self):
         self.running = True
-        while self.running:
-            
-            self.__print_sensors()
+        try:
+            while self.running:
+                
+                self.__print_sensors()
 
-            try:
-                recv = self.client.recv()
-            except:
-                print("Connection lost, reconnecting...")
-                self.stop_rover()
-                time.sleep(3)
-                self.connect(self.controller_ip, self.controller_port)
-                continue
-            
-            if recv != "":
+                try:
+                    recv = self.client.recv()
+                except:
+                    print("Connection lost, reconnecting...")
+                    self.stop_rover()
+                    time.sleep(3)
+                    self.connect(self.controller_ip, self.controller_port)
+                    continue
+                
+                if recv == "":
+                    continue
+
                 try:
                     cmd_dict = json.loads(recv)
                 except:
@@ -213,7 +216,10 @@ class Rover():
                 self.last_head = self.head
                 self.last_tilt = self.tilt
                 self.last_pan = self.pan
-        
+        except KeyboardInterrupt:
+            pass
+        except Exception as e:
+            print(f"Error: {e}")
         print("Rover not running anymore")
 
     def set_all_leds_rgb(self, r, g, b):
