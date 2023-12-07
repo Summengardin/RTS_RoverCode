@@ -54,9 +54,10 @@ class PiCamStreamer:
             #stream.seek(0)
             #stream.truncate()
         
-        self.done = True
+        
         print("Closing streamer")
         stream.close()
+        self.done = True
 
     def run(self):
         self.running = True
