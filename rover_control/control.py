@@ -233,6 +233,18 @@ class Rover():
             self.head = int(cmd_dict['heading']) if cmd_dict['heading'] is not None else self.last_head
             self.tilt = int(cmd_dict['servo_tilt']) if cmd_dict['servo_tilt'] is not None else self.last_tilt
             self.pan = int(cmd_dict['servo_pan']) if cmd_dict['servo_pan'] is not None else self.last_pan
+
+            print(f"Drive mode: {self.drive_mode}")
+            print(f"Left direction: {self.left_direction}")
+            print(f"Left velocity: {self.left_velocity}")
+            print(f"Right direction: {self.right_direction}")
+            print(f"Right velocity: {self.right_velocity}")
+            print(f"Speed: {self.speed}")
+            print(f"Heading: {self.head}")
+            print(f"Tilt: {self.tilt}")
+            print(f"Pan: {self.pan}")
+
+
             
     
     def __battery_handler(self, battery_percentage):
