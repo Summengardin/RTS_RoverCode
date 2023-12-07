@@ -43,19 +43,23 @@ class PiCamStreamer:
             else:
                 print("Image too large to send over UDP")
 
+            if self.running:
+                break
+
             # Reset the stream for the next capture
-            stream.seek(0)
-            stream.truncate()
+            #stream.seek(0)
+            #stream.truncate()
         
         print("Closing streamer")
+        self.camera.close()
+        stream.close()
 
     def run(self):
+        self.running = True
         self.stream_video()
 
     def stop(self):
-        print("Closing camera...")
-        self.camera.close()
-        print("Closed")
+        self.running = False
         print("Closing socket...")
         self.socket.shutdown(socket.SHUT_RDWR)    
         self.sock.close()
