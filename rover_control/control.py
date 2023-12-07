@@ -96,7 +96,7 @@ class Rover(SpheroRvrObserver):
         self.wake()
         time.sleep(2)
         #self.reset_heading()
-
+        self.battery_percentage = 0
         
         #self.sensor_control.add_sensor_data_handler('IMU', imu_handler)
         #self.sensor_control.add_sensor_data_handler('Accelerometer', accelerometer_handler)
