@@ -126,7 +126,6 @@ class Rover():
         self.drive_rover(0,0,0,0)
 
     def move_servo(self, servo, position, swing = 90):
-        print(f"Moving servo {servo} to position {position}")
         self.servos.move_servo_position(servo, position, swing)
 
     def recv_message(self):
