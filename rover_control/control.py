@@ -227,8 +227,8 @@ class Rover(SpheroRvrObserver):
         self.battery_percentage = battery_percentage
 
     def __read_sensors(self):
-        self.battery_percentage = self.get_battery_percentage(self.__battery_handler)
-
+        getret = self.get_battery_percentage(self.__battery_handler)
+        print(getret)
     
     def __print_sensors(self):
         self.__read_sensors()
