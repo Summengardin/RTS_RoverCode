@@ -222,9 +222,12 @@ class Rover(SpheroRvrObserver):
             self.tilt = int(cmd_dict['servo_tilt']) if cmd_dict['servo_tilt'] is not None else self.last_tilt
             self.pan = int(cmd_dict['servo_pan']) if cmd_dict['servo_pan'] is not None else self.last_pan
             
+    
+    def __battery_handler(self, battery_percentage):
+        self.battery_percentage = battery_percentage
 
     def __read_sensors(self):
-        self.battery_percentage = self.get_battery_percentage(battery_handler)
+        self.battery_percentage = self.get_battery_percentage(self.battery_handler)
 
     
     def __print_sensors(self):
