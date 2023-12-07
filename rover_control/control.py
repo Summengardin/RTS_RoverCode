@@ -218,19 +218,11 @@ class Rover(SpheroRvrObserver):
 
     def __read_sensors(self):
         self.battery_percentage = self.get_battery_percentage(battery_handler)
-        self.velocity = self.get_raw_motors_data()
-        self.velocity = self.velocity['right_motor_emf_filtered'] if self.velocity['right_motor_emf_filtered'] > self.velocity['left_motor_emf_filtered'] else self.velocity['left_motor_emf_filtered']
-        self.velocity = self.velocity / 1000
-        self.velocity = self.velocity * 3.6
-        self.velocity = self.velocity * 10
-        self.velocity = round(self.velocity, 2)
-        self.velocity = self.velocity if self.velocity < 255 else 255
 
     
     def __print_sensors(self):
         self.__read_sensors()
         print(f"Battery: {self.battery_percentage}%")
-        print(f"Velocity: {self.velocity} km/h")
 
 
 def main():
