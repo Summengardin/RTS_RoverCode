@@ -71,10 +71,10 @@ def battery_handler(battery_percentage):
 
 
 
-class Rover(SpheroRvrObserver):
+class Rover():
     def __init__(self, ip) -> None:
-        SpheroRvrObserver.__init__(self)
-        self.set_all_leds_rgb(255,125,0)
+        self.rvr = SpheroRvrObserver()
+        self.rvr.set_all_leds_rgb(255,125,0)
 
         # Initialize last known states
         self.last_drive_mode = 'tank'
@@ -101,8 +101,8 @@ class Rover(SpheroRvrObserver):
         #self.sensor_control.add_sensor_data_handler('IMU', imu_handler)
         #self.sensor_control.add_sensor_data_handler('Accelerometer', accelerometer_handler)
         #self.sensor_control.add_sensor_data_handler('Velocity', velocity_handler)
-        print(f"Supported: {self.sensor_control.supported_sensors}")
-        print(f"Enabled: {self.sensor_control.enabled_sensors}")
+        #print(f"Supported: {self.rvr.sensor_control.supported_sensors}")
+        #print(f"Enabled: {self.rvr.sensor_control.enabled_sensors}")
         ##self.sensor_control.start(interval=1000)
 
         self.controller_ip = ip
@@ -110,6 +110,9 @@ class Rover(SpheroRvrObserver):
         self.connect(self.controller_ip, self.controller_port)
         self.running = False
 
+
+    def __del__(self):
+        self.stop()
 
     def connect(self, host, port):
         print(f"Connecting to server at: {host}:{port}...")
@@ -120,16 +123,25 @@ class Rover(SpheroRvrObserver):
 
     def stop(self):
         self.running = False
-        self.set_all_leds_rgb(255,0,0)
+        try:
+            self.rvr.set_all_leds_rgb(255,0,0)
+        except Exception as e:
+            print(f"Error setting leds: {e}")
         print("Closing connection...")
-        self.client.close()
+        try:
+            self.client.close()
+        except Exception as e:
+            print(f"Error closing connection: {e}")
         print("Closed")
         print("Closing rover...")
-        self.close()
+        try:
+            self.rvr.close()
+        except Exception as e:
+            print(f"Error closing rover: {e}")
         print("Closed")  
 
     def drive_rover(self, left_dir, left_vel, right_dir, right_vel):
-        self.raw_motors(left_dir, left_vel, right_dir, right_vel)
+        self.rvr.raw_motors(left_dir, left_vel, right_dir, right_vel)
 
     def stop_rover(self):
         self.drive_rover(0,0,0,0)
@@ -190,7 +202,7 @@ class Rover(SpheroRvrObserver):
                 if self.drive_mode == 'tank':
                     self.drive_rover(int(self.left_direction), int(self.left_velocity), int(self.right_direction), int(self.right_velocity))
                 elif self.drive_mode == 'heading':
-                    self.drive_with_heading(int(self.speed), int(self.heading), 0)
+                    self.rvr.drive_with_heading(int(self.speed), int(self.heading), 0)
 
                 self.last_drive_mode = self.drive_mode
                 self.last_left_direction = self.left_direction
@@ -205,7 +217,7 @@ class Rover(SpheroRvrObserver):
         print("Rover not running anymore")
 
     def set_all_leds_rgb(self, r, g, b):
-        self.set_all_leds(
+        self.rvr.set_all_leds(
             RvrLedGroups.all_lights.value,
             [color for x in range(0, 10) for color in [r, g, b]]
         )
@@ -227,7 +239,7 @@ class Rover(SpheroRvrObserver):
         self.battery_percentage = battery_percentage
 
     def __read_sensors(self):
-        getret = self.get_battery_percentage(self.__battery_handler)
+        getret = self.rvr.get_battery_percentage(self.__battery_handler)
         print(getret)
     
     def __print_sensors(self):
