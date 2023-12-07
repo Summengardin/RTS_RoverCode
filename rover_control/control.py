@@ -93,7 +93,7 @@ class Rover():
         self.move_servo(PAN_SERVO, self.last_pan, 180)
 
         #self.Blinker = blinker.Blinker(1)
-        self.wake()
+        self.rvr.wake()
         time.sleep(2)
         #self.reset_heading()
         self.battery_percentage = 0
