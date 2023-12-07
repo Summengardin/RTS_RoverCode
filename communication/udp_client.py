@@ -20,7 +20,7 @@ class PiCamStreamer:
         self.camera.framerate = self.framerate
 
         self.running = False
-        self.done = False
+        self.stream_closed = True
 
         # Warm up the camera
         self.camera.start_preview()
@@ -28,6 +28,7 @@ class PiCamStreamer:
         self.camera.stop_preview()
 
     def stream_video(self):
+        self.stream_closed = False
         print(f"Streaming video to {self.server_address} ")
         stream = io.BytesIO()
         for _ in self.camera.capture_continuous(stream, format='jpeg', use_video_port=True):
@@ -49,16 +50,9 @@ class PiCamStreamer:
 
             if not self.running:
                 break
-
-            # Reset the stream for the next capture
-            #stream.seek(0)
-            #stream.truncate()
         
-        
-        print("Closing streamer")
         stream.close()
-        print("Closed")
-        self.done = True
+        self.stream_closed = True
 
     def run(self):
         self.running = True
@@ -66,16 +60,10 @@ class PiCamStreamer:
 
     def stop(self):
         self.running = False
-        
-        while not self.done:
+        while not self.stream_closed:
             time.sleep(0.1)
-        print("Closing camera...")
         self.camera.close()
-        print("Closed")
-        print("Closing socket...")
-        #self.sock.shutdown(socket.SHUT_RDWR)    
         self.sock.close()
-        print("Closed")
 
 
 if __name__ == "__main__":
