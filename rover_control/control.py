@@ -229,10 +229,10 @@ class Rover():
             
     
     def __battery_handler(self, battery_percentage):
-        self.battery_percentage = battery_percentage
+        self.battery_percentage = battery_percentage['percentage']
 
     def __read_sensors(self):
-        self.rvr.get_battery_percentage(self.__battery_handler)['percentage']
+        self.rvr.get_battery_percentage(self.__battery_handler)
     
     def __print_sensors(self):
         self.__read_sensors()
