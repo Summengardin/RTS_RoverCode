@@ -25,6 +25,7 @@ class PiCamStreamer:
         self.camera.stop_preview()
 
     def stream_video(self):
+        print(f"Streaming video to {self.server_address} ")
         stream = io.BytesIO()
         for _ in self.camera.capture_continuous(stream, format='jpeg', use_video_port=True):
             stream.truncate()
