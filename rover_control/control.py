@@ -12,7 +12,6 @@ import threading
 
 from sphero_sdk import SpheroRvrObserver
 from sphero_sdk import RvrLedGroups
-from sphero_sdk import SensorStreamingControl
 import pi_servo_hat
 
 import communication.tcp_client as tcp_client
