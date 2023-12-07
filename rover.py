@@ -40,10 +40,10 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Exiting...")
 
-
-    controller.stop()
-    controller_thread.join()
     stream.stop()
     stream_thread.join()
+    controller.stop()
+    controller_thread.join()
+    
 
     print ("Done")
