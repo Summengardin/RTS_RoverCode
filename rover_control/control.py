@@ -100,9 +100,10 @@ class Rover(SpheroRvrObserver):
         
         self.sensor_control.add_sensor_data_handler('IMU', imu_handler)
         self.sensor_control.add_sensor_data_handler('Accelerometer', accelerometer_handler)
+        self.sensor_control.add_sensor_data_handler('Velocity', velocity_handler)
         print(f"Supported: {self.sensor_control.supported_sensors}")
         print(f"Enabled: {self.sensor_control.enabled_sensors}")
-        self.sensor_control.start(interval=100)
+        self.sensor_control.start(interval=1000)
 
         self.controller_ip = ip
         self.controller_port = 9091
