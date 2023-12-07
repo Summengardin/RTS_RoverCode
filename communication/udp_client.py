@@ -53,10 +53,13 @@ class PiCamStreamer:
         self.stream_video()
 
     def close(self):
+        print("Closing camera...")
         self.camera.close()
+        print("Closed")
         print("Closing socket...")
         self.socket.shutdown(socket.SHUT_RDWR)    
         self.sock.close()
+        print("Closed")
 
 
 if __name__ == "__main__":
