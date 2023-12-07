@@ -85,9 +85,8 @@ class Rover(SpheroRvrObserver):
         time.sleep(2)
         #self.reset_heading()
 
-        self.SensorStream = SensorStreamingControl(self)
-        self.SensorStream.start(interval=100)
-        print(f"Supported: {self.SensorStream.supported_sensors}")
+        self.sensor_control.start(interval=100)
+        print(f"Supported: {self.sensor_control.supported_sensors()}")
 
         self.controller_ip = ip
         self.controller_port = 9091
