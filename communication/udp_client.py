@@ -51,7 +51,6 @@ class PiCamStreamer:
             #stream.truncate()
         
         print("Closing streamer")
-        self.camera.close()
         stream.close()
 
     def run(self):
@@ -60,6 +59,9 @@ class PiCamStreamer:
 
     def stop(self):
         self.running = False
+        print("Closing camera...")
+        self.camera.close()
+        print("Closed")
         print("Closing socket...")
         self.sock.shutdown(socket.SHUT_RDWR)    
         self.sock.close()
