@@ -52,6 +52,7 @@ class PiCamStreamer:
 
     def close(self):
         self.camera.close()
+        self.socket.shutdown(socket.SHUT_RDWR)    
         self.sock.close()
 
 

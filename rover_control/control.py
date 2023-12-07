@@ -161,7 +161,6 @@ class Rover():
                     continue
                 
                 if recv == "":
-                    print("Recv is empty")
                     break
 
                 try:
