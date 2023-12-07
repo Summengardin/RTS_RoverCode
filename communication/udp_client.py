@@ -52,7 +52,7 @@ class PiCamStreamer:
     def run(self):
         self.stream_video()
 
-    def close(self):
+    def stop(self):
         print("Closing camera...")
         self.camera.close()
         print("Closed")
@@ -69,4 +69,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Stopping streamer")
     finally:
-        streamer.close()
+        streamer.stop()

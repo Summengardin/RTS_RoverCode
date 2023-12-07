@@ -29,9 +29,10 @@ if __name__ == "__main__":
     controller_thread.daemon = True
     controller_thread.start()
 
-    camera_thread = threading.Thread(name="camera_thread", target=mainCamera, args=(ip,))
-    camera_thread.daemon = True
-    camera_thread.start()
+    stream = PiCamStreamer(server_address=(ip, 8080), resolution=(320, 240), framerate=30)
+    stream_thread = threading.Thread(name="stream_thread", target=stream.run)
+    stream_thread.daemon = True
+    stream_thread.start()
 
     try:
         while True:
@@ -42,6 +43,7 @@ if __name__ == "__main__":
 
     controller.stop()
     controller_thread.join()
-    camera_thread.join()
+    stream.stop()
+    stream_thread.join()
 
     print ("Done")
