@@ -43,7 +43,7 @@ class PiCamStreamer:
             else:
                 print("Image too large to send over UDP")
 
-            if self.running:
+            if not self.running:
                 break
 
             # Reset the stream for the next capture
