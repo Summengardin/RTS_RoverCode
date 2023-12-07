@@ -57,19 +57,6 @@ def parse_cmd_dict(cmd_dict) -> dict:
     }
     return parsed_cmd
 
-def imu_handler(imu_data):
-    print('IMU data response: ', imu_data)
-
-def accelerometer_handler(accelerometer_data):
-    print('Accelerometer data response: ', accelerometer_data)
-
-def velocity_handler(velocity_data):
-    print('Velocity data response: ', velocity_data)
-
-def battery_handler(battery_percentage):
-    print('Battery percentage: ', battery_percentage)
-
-
 
 class Rover():
     def __init__(self, ip) -> None:
@@ -245,8 +232,7 @@ class Rover():
         self.battery_percentage = battery_percentage
 
     def __read_sensors(self):
-        getret = self.rvr.get_battery_percentage(self.__battery_handler)
-        print(getret)
+        self.rvr.get_battery_percentage(self.__battery_handler)['percentage']
     
     def __print_sensors(self):
         self.__read_sensors()
