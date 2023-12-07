@@ -57,6 +57,19 @@ def parse_cmd_dict(cmd_dict) -> dict:
     }
     return parsed_cmd
 
+def imu_handler(self, imu_data):
+    print('IMU data response: ', imu_data)
+
+def accelerometer_handler(self, accelerometer_data):
+    print('Accelerometer data response: ', accelerometer_data)
+
+def velocity_handler(self, velocity_data):
+    print('Velocity data response: ', velocity_data)
+
+def battery_handler(self, battery_percentage):
+    print('Battery percentage: ', battery_percentage)
+
+
 
 class Rover(SpheroRvrObserver):
     def __init__(self, ip) -> None:
@@ -202,9 +215,9 @@ class Rover(SpheroRvrObserver):
             
 
     def __read_sensors(self):
-        self.battery_percentage = self.get_battery_percentage()
-        self.imu_data = self.get_imu_data()
-        self.accelerometer_data = self.get_raw_accelerometer_data()
+        self.battery_percentage = self.get_battery_percentage(battery_handler)
+        self.imu_data = self.get_imu_data(imu_handler)
+        self.accelerometer_data = self.get_raw_accelerometer_data(accelerometer_handler)
         self.velocity = self.get_raw_motors_data()
         self.velocity = self.velocity['right_motor_emf_filtered'] if self.velocity['right_motor_emf_filtered'] > self.velocity['left_motor_emf_filtered'] else self.velocity['left_motor_emf_filtered']
         self.velocity = self.velocity / 1000
