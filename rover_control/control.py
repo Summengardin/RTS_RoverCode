@@ -100,6 +100,8 @@ class Rover(SpheroRvrObserver):
         self.sensor_control.start(interval=100)
         print(f"Supported: {self.sensor_control.supported_sensors}")
         print(f"Enabled: {self.sensor_control.enabled_sensors}")
+        self.sensor_control.add_sensor_data_handler('IMU', imu_handler)
+        self.sensor_control.add_sensor_data_handler('Accelerometer', accelerometer_handler)
 
         self.controller_ip = ip
         self.controller_port = 9091
@@ -216,8 +218,6 @@ class Rover(SpheroRvrObserver):
 
     def __read_sensors(self):
         self.battery_percentage = self.get_battery_percentage(battery_handler)
-        self.imu_data = self.get_imu_data(imu_handler)
-        self.accelerometer_data = self.get_raw_accelerometer_data(accelerometer_handler)
         self.velocity = self.get_raw_motors_data()
         self.velocity = self.velocity['right_motor_emf_filtered'] if self.velocity['right_motor_emf_filtered'] > self.velocity['left_motor_emf_filtered'] else self.velocity['left_motor_emf_filtered']
         self.velocity = self.velocity / 1000
@@ -230,8 +230,6 @@ class Rover(SpheroRvrObserver):
     def __print_sensors(self):
         self.__read_sensors()
         print(f"Battery: {self.battery_percentage}%")
-        print(f"IMU: {self.imu_data}")
-        print(f"Accelerometer: {self.accelerometer_data}")
         print(f"Velocity: {self.velocity} km/h")
 
 
