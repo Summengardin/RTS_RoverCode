@@ -83,8 +83,6 @@ class Rover():
         self.rvr.wake()
         time.sleep(2)
         #self.reset_heading()
-        self.battery_percentage = 0
-        
         #self.sensor_control.add_sensor_data_handler('IMU', imu_handler)
         #self.sensor_control.add_sensor_data_handler('Accelerometer', accelerometer_handler)
         #self.sensor_control.add_sensor_data_handler('Velocity', velocity_handler)
@@ -148,8 +146,6 @@ class Rover():
         self.running = True
         try:
             while self.running:
-                
-                self.__print_sensors()
 
                 try:
                     recv = self.client.recv()
@@ -227,16 +223,7 @@ class Rover():
             self.tilt = int(cmd_dict['servo_tilt']) if cmd_dict['servo_tilt'] is not None else self.last_tilt
             self.pan = int(cmd_dict['servo_pan']) if cmd_dict['servo_pan'] is not None else self.last_pan
             
-    
-    def __battery_handler(self, battery_percentage):
-        self.battery_percentage = battery_percentage['percentage']
 
-    def __read_sensors(self):
-        self.rvr.get_battery_percentage(self.__battery_handler)
-    
-    def __print_sensors(self):
-        self.__read_sensors()
-        print(f"Battery: {self.battery_percentage}%")
 
 
 def main():
