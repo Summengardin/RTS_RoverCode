@@ -4,6 +4,7 @@ import sys
 
 sys.path.append('/home/MartinElias/dev/dependencies/sphero-sdk-raspberrypi-python/')
 sys.path.append('/home/MartinElias/dev/')
+sys.path.append('/home/MartinElias/dev/RTS_RoverCode/')
 
 import time
 import json
