@@ -1,5 +1,3 @@
-print("Starting rover... Importing modules")
-
 import sys
 
 sys.path.append('/home/MartinElias/dev/dependencies/sphero-sdk-raspberrypi-python/')
@@ -33,7 +31,6 @@ MIN_TILT = -50
 MAX_PAN = 180
 MIN_PAN = 0
 
-rvr = SpheroRvrObserver()
 
 prev_time = 0
 

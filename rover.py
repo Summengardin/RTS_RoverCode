@@ -1,4 +1,4 @@
-import argparse
+print("Importing modules...")
 import threading
 import time
 import sys
@@ -6,18 +6,6 @@ import sys
 from communication.udp_client import PiCamStreamer
 from rover_control import control
 
-
-def mainCamera(ip):
-    streamer = PiCamStreamer(server_address=(ip, 8080), resolution=(320, 240), framerate=30)
-    print("Streaming to IP address:", ip)
-    streamer.run()
-
-
-def commsArgs():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('ip', type=str, help='IP address for the RPI to stream to.')
-    args = parser.parse_args()
-    return args
 
 
 if __name__ == "__main__":
