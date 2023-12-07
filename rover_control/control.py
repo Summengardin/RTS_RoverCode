@@ -66,7 +66,7 @@ def accelerometer_handler(self, accelerometer_data):
 def velocity_handler(self, velocity_data):
     print('Velocity data response: ', velocity_data)
 
-def battery_handler(self, battery_percentage):
+def battery_handler(battery_percentage):
     print('Battery percentage: ', battery_percentage)
 
 
