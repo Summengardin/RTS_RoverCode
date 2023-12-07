@@ -12,6 +12,7 @@ class tcp_client:
         self.socket.connect((host, port))
 
     def close(self):
+        self.socket.shutdown(socket.SHUT_RDWR)
         self.socket.close()
 
     def send(self, data):
