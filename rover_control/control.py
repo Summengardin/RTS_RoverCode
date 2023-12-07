@@ -8,7 +8,7 @@ sys.path.append('/home/MartinElias/dev/RTS_RoverCode/')
 
 import time
 import json
-import threading
+
 
 from sphero_sdk import SpheroRvrObserver
 from sphero_sdk import RvrLedGroups
@@ -95,9 +95,6 @@ class Rover():
         self.connect(self.controller_ip, self.controller_port)
         self.running = False
 
-
-    def __del__(self):
-        self.stop()
 
     def connect(self, host, port):
         print(f"Connecting to server at: {host}:{port}...")
@@ -227,6 +224,8 @@ class Rover():
 
 
 def main():
+    import threading
+
     ip = sys.argv[1] if len(sys.argv) > 1 else "10.22.192.34"
     
 
