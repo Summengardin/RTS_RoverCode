@@ -46,6 +46,8 @@ class PiCamStreamer:
             # Reset the stream for the next capture
             stream.seek(0)
             stream.truncate()
+        
+        print("Closing streamer")
 
     def run(self):
         self.stream_video()
