@@ -124,7 +124,7 @@ class Rover():
     def stop(self):
         self.running = False
         try:
-            self.rvr.set_all_leds_rgb(255,0,0)
+            self.set_all_leds_rgb(255,0,0)
         except Exception as e:
             print(f"Error setting leds: {e}")
         print("Closing connection...")
