@@ -7,12 +7,10 @@ from communication.udp_client import PiCamStreamer
 from rover_control import control
 
 
-
 if __name__ == "__main__":
-    print(threading.active_count())
+    print("Running... ctrl+c to exit")
     ip = sys.argv[1] if len(sys.argv) > 1 else "10.22.192.34"
-    # args = parse_args()
-    # main(args)
+
     controller = control.Rover(ip)
     controller_thread = threading.Thread(name="controller_thread", target=controller.run)
     controller_thread.daemon = True
@@ -27,7 +25,7 @@ if __name__ == "__main__":
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
-        print("Exiting...")
+        print("\nExiting...")
 
     print(threading.active_count())
     stream.stop()
@@ -36,6 +34,5 @@ if __name__ == "__main__":
     controller.stop()
     controller_thread.join()
     
-
     print ("Done")
-    print(threading.active_count())
+

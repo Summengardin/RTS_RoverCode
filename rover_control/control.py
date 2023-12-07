@@ -102,22 +102,22 @@ class Rover():
 
     def stop(self):
         self.running = False
+
         try:
             self.set_all_leds_rgb(255,0,0)
         except Exception as e:
             print(f"Error setting leds: {e}")
-        print("Closing connection...")
+
         try:
             self.client.close()
         except Exception as e:
             print(f"Error closing connection: {e}")
-        print("Closed")
-        print("Closing rover...")
+
         try:
             self.rvr.close()
         except Exception as e:
             print(f"Error closing rover: {e}")
-        print("Closed")  
+
 
     def drive_rover(self, left_dir, left_vel, right_dir, right_vel):
         self.rvr.raw_motors(left_dir, left_vel, right_dir, right_vel)
@@ -197,7 +197,6 @@ class Rover():
             pass
         except Exception as e:
             print(f"Error: {e}")
-        print("Rover not running anymore")
 
     def set_all_leds_rgb(self, r, g, b):
         self.rvr.set_all_leds(
