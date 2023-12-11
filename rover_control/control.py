@@ -18,7 +18,6 @@ import blinker
 TILT_SERVO = 0
 PAN_SERVO = 1
 
-# Create an instance of the Servo Phat
 servos = pi_servo_hat.PiServoHat()
 
 servos.restart()
@@ -76,7 +75,6 @@ class Rover():
         self.move_servo(TILT_SERVO, self.last_tilt)
         self.move_servo(PAN_SERVO, self.last_pan, 180)
 
-        #self.Blinker = blinker.Blinker(1)
         self.rvr.wake()
         time.sleep(2)
         #self.reset_heading()
