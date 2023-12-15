@@ -13,8 +13,6 @@ if (Mux.is_connected() == False):
     print("The Qwiic Mux device isn't connected to the system. Please check your connection")
     exit(1) 
 
-
-# Enable channel 3 and 7
 Mux.enable_all()
 time.sleep(1)
 Mux.list_channels()
@@ -25,8 +23,6 @@ if (Tof_front.sensor_init() == None):
 
 if (Tof_back.sensor_init() == None):
 	print("Sensor in back online!\n")
-
-
 
 while(True):
     try: 
